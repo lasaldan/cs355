@@ -48,6 +48,9 @@ public class ViewRefresher implements IViewRefresher, Observer {
             if(shape instanceof Circle)
                 drawable = new DrawableCircle((Circle) shape);
 
+            if(shape instanceof Triangle)
+                drawable = new DrawableTriangle((Triangle) shape);
+
             drawable.drawOn(g2d);
         });
     }

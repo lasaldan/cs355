@@ -2,7 +2,14 @@ package cs355.solution;
 
 import cs355.GUIFunctions;
 import cs355.ICS355Controller;
-import cs355.solution.model.*;
+import cs355.solution.model.Circle;
+import cs355.solution.model.Ellipse;
+import cs355.solution.model.Line;
+import cs355.solution.model.ModelFacade;
+import cs355.solution.model.Point2D;
+import cs355.solution.model.Rectangle;
+import cs355.solution.model.Square;
+import cs355.solution.model.Triangle;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -138,6 +145,29 @@ public class CS355Controller implements ICS355Controller {
 
     public void handleClick(Point2D loc) {
 
+        Triangle triangle;
+
+        switch (currentState) {
+            case DRAWING_TRIANGLE_FIRST_POINT:
+                triangle = new Triangle(loc, currentColor);
+                currentShapeIndex = model.addShape(triangle);
+                currentState = CS355State.DRAWING_TRIANGLE_SECOND_POINT;
+                break;
+
+            case DRAWING_TRIANGLE_SECOND_POINT:
+                triangle = (Triangle) model.getShape(currentShapeIndex);
+                triangle.setPt2(loc);
+                model.setShape(currentShapeIndex, triangle);
+                currentState = CS355State.DRAWING_TRIANGLE_THIRD_POINT;
+                break;
+
+            case DRAWING_TRIANGLE_THIRD_POINT:
+                triangle = (Triangle) model.getShape(currentShapeIndex);
+                triangle.setPt3(loc);
+                model.setShape(currentShapeIndex, triangle);
+                currentState = CS355State.DRAWING_TRIANGLE_FIRST_POINT;
+                break;
+        }
     }
 
     @Override
