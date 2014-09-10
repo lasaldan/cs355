@@ -26,6 +26,7 @@ public class CS355
      */
     public static void main(String[] args) 
     {
+        Color defaultColor = Color.RED;
         ModelFacade modelFacade = new ModelFacade();
 
         IViewRefresher viewRefresher = new ViewRefresher();
@@ -40,7 +41,8 @@ public class CS355
         // Fill in the parameters below with your controller, view,
         //   mouse listener, and mouse motion listener
         GUIFunctions.createCS355Frame(controller,viewRefresher,mouseListener,mouseMotionListener);
-        
+
+        controller.colorButtonHit(defaultColor);
         GUIFunctions.refresh();        
     }
 }

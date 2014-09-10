@@ -8,6 +8,7 @@ import cs355.solution.model.Line;
 import cs355.solution.model.ModelFacade;
 import cs355.solution.model.Point2D;
 import cs355.solution.model.Rectangle;
+import cs355.solution.model.Shape;
 import cs355.solution.model.Square;
 import cs355.solution.model.Triangle;
 
@@ -23,6 +24,7 @@ public class CS355Controller implements ICS355Controller {
     Color currentColor;
     CS355State currentState;
     int currentShapeIndex;
+    Shape temp;
     ModelFacade model;
 
 
@@ -145,26 +147,20 @@ public class CS355Controller implements ICS355Controller {
 
     public void handleClick(Point2D loc) {
 
-        Triangle triangle;
-
         switch (currentState) {
             case DRAWING_TRIANGLE_FIRST_POINT:
-                triangle = new Triangle(loc, currentColor);
-                currentShapeIndex = model.addShape(triangle);
+                temp = new Triangle(loc, currentColor);
                 currentState = CS355State.DRAWING_TRIANGLE_SECOND_POINT;
                 break;
 
             case DRAWING_TRIANGLE_SECOND_POINT:
-                triangle = (Triangle) model.getShape(currentShapeIndex);
-                triangle.setPt2(loc);
-                model.setShape(currentShapeIndex, triangle);
+                ((Triangle) temp).setPt2(loc);
                 currentState = CS355State.DRAWING_TRIANGLE_THIRD_POINT;
                 break;
 
             case DRAWING_TRIANGLE_THIRD_POINT:
-                triangle = (Triangle) model.getShape(currentShapeIndex);
-                triangle.setPt3(loc);
-                model.setShape(currentShapeIndex, triangle);
+                ((Triangle) temp).setPt3(loc);
+                model.addShape(temp);
                 currentState = CS355State.DRAWING_TRIANGLE_FIRST_POINT;
                 break;
         }
