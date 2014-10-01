@@ -26,6 +26,8 @@ public class CS355Controller implements ICS355Controller {
     int currentShapeIndex;
     Shape temp;
     ModelFacade model;
+    Point2D first;
+    Point2D second;
 
 
     public CS355Controller() {
@@ -72,7 +74,8 @@ public class CS355Controller implements ICS355Controller {
 
     @Override
     public void selectButtonHit() {
-
+        currentState = CS355State.SELECTING;
+        currentShapeIndex = -1;
     }
 
     @Override
@@ -149,19 +152,23 @@ public class CS355Controller implements ICS355Controller {
 
         switch (currentState) {
             case DRAWING_TRIANGLE_FIRST_POINT:
-                temp = new Triangle(loc, currentColor);
+                first = new Point2D(loc);
                 currentState = CS355State.DRAWING_TRIANGLE_SECOND_POINT;
                 break;
 
             case DRAWING_TRIANGLE_SECOND_POINT:
-                ((Triangle) temp).setPt2(loc);
+                second = new Point2D(loc);
                 currentState = CS355State.DRAWING_TRIANGLE_THIRD_POINT;
                 break;
 
             case DRAWING_TRIANGLE_THIRD_POINT:
-                ((Triangle) temp).setPt3(loc);
+                temp = new Triangle(first, second, new Point2D(loc), currentColor);
                 model.addShape(temp);
                 currentState = CS355State.DRAWING_TRIANGLE_FIRST_POINT;
+                break;
+
+            case SELECTING:
+                currentShapeIndex = model.getShapeIndexAt(loc);
                 break;
         }
     }
@@ -171,32 +178,32 @@ public class CS355Controller implements ICS355Controller {
 
         switch (currentState) {
             case DRAWING_LINE_FIRST_POINT:
-                Line line = new Line( loc, loc, currentColor );
-                currentShapeIndex = model.addShape( line );
+                first = new Point2D( loc );
+                temp = new Line( loc, loc, currentColor );
                 currentState = CS355State.DRAWING_LINE_SECOND_POINT;
                 break;
 
             case DRAWING_RECTANGLE_FIRST_POINT:
-                Rectangle rect = new Rectangle(loc, 0, 0, currentColor);
-                currentShapeIndex = model.addShape( rect );
+                first = new Point2D( loc );
+                temp = new Rectangle(loc, 0, 0, currentColor);
                 currentState = CS355State.DRAWING_RECTANGLE_SECOND_POINT;
                 break;
 
             case DRAWING_SQUARE_FIRST_POINT:
-                Square square = new Square(loc, 0, currentColor);
-                currentShapeIndex = model.addShape( square );
+                first = new Point2D( loc );
+                temp = new Square(loc, 0, currentColor);
                 currentState = CS355State.DRAWING_SQUARE_SECOND_POINT;
                 break;
 
             case DRAWING_ELLIPSE_FIRST_POINT:
-                Ellipse ellipse = new Ellipse(loc, 0, 0, currentColor);
-                currentShapeIndex = model.addShape( ellipse );
+                first = new Point2D( loc );
+                temp = new Ellipse(loc, 0, 0, currentColor);
                 currentState = CS355State.DRAWING_ELLIPSE_SECOND_POINT;
                 break;
 
             case DRAWING_CIRCLE_FIRST_POINT:
-                Circle circle = new Circle(loc, 0, 0, currentColor);
-                currentShapeIndex = model.addShape( circle );
+                first = new Point2D( loc );
+                temp = new Circle(loc, 0, currentColor);
                 currentState = CS355State.DRAWING_CIRCLE_SECOND_POINT;
                 break;
         }
@@ -207,37 +214,28 @@ public class CS355Controller implements ICS355Controller {
 
         switch (currentState) {
             case DRAWING_LINE_SECOND_POINT:
-                Line line = (Line) model.getShape(currentShapeIndex);
-                line.setEndPoint(point2D);
-                model.setShape(currentShapeIndex, line);
+                ((Line) temp).setEndPoint(point2D);
                 break;
 
             case DRAWING_RECTANGLE_SECOND_POINT:
-                Rectangle rect = (Rectangle) model.getShape(currentShapeIndex);
-                rect.setDimensions(point2D);
-                model.setShape(currentShapeIndex, rect);
+                ((Rectangle) temp).setDimensions(first, point2D);
                 break;
 
             case DRAWING_SQUARE_SECOND_POINT:
-                Square square = (Square) model.getShape(currentShapeIndex);
-                square.setDimensions( point2D );
-                model.setShape(currentShapeIndex, square);
+                ((Square) temp).setDimensions(first, point2D);
                 break;
 
             case DRAWING_ELLIPSE_SECOND_POINT:
-                Ellipse ellipse = (Ellipse) model.getShape(currentShapeIndex);
-                ellipse.setDimensions( point2D );
-                model.setShape(currentShapeIndex, ellipse);
+                ((Ellipse) temp).setDimensions(first, point2D);
                 break;
 
             case DRAWING_CIRCLE_SECOND_POINT:
-                Circle circle = (Circle) model.getShape(currentShapeIndex);
-                circle.setDimensions( point2D );
-                model.setShape(currentShapeIndex, circle);
+                ((Circle) temp).setDimensions(first, point2D);
                 break;
 
 
         }
+        GUIFunctions.refresh();
     }
 
     @Override
@@ -245,23 +243,33 @@ public class CS355Controller implements ICS355Controller {
 
         switch (currentState) {
             case DRAWING_LINE_SECOND_POINT:
+                model.addShape(temp);
                 currentState = CS355State.DRAWING_LINE_FIRST_POINT;
+                temp = null;
                 break;
 
             case DRAWING_RECTANGLE_SECOND_POINT:
+                model.addShape(temp);
                 currentState = CS355State.DRAWING_RECTANGLE_FIRST_POINT;
+                temp = null;
                 break;
 
             case DRAWING_SQUARE_SECOND_POINT:
+                model.addShape(temp);
                 currentState = CS355State.DRAWING_SQUARE_FIRST_POINT;
+                temp = null;
                 break;
 
             case DRAWING_ELLIPSE_SECOND_POINT:
+                model.addShape( temp );
                 currentState = CS355State.DRAWING_ELLIPSE_FIRST_POINT;
+                temp = null;
                 break;
 
             case DRAWING_CIRCLE_SECOND_POINT:
+                model.addShape( temp );
                 currentState = CS355State.DRAWING_CIRCLE_FIRST_POINT;
+                temp = null;
                 break;
 
         }
@@ -270,5 +278,10 @@ public class CS355Controller implements ICS355Controller {
     @Override
     public void setModel( ModelFacade _model ) {
         this.model = _model;
+    }
+
+    @Override
+    public Shape getTempShape() {
+        return temp;
     }
 }

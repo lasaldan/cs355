@@ -20,8 +20,8 @@ public class DrawableSquare implements DrawableShape {
 
         size = s.getSize();
 
-        x = s.getCorner().x;
-        y = s.getCorner().y;
+        x = s.getCenter().x;
+        y = s.getCenter().y;
 
         color = s.getColor();
     }
@@ -29,6 +29,6 @@ public class DrawableSquare implements DrawableShape {
     @Override
     public void drawOn( Graphics2D g) {
         g.setPaint(color);
-        g.fill(new Rectangle2D.Double(x, y, size, size));
+        g.fill(new Rectangle2D.Double(x-(size/2), y-(size/2), size, size));
     }
 }

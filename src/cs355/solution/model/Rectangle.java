@@ -2,34 +2,26 @@ package cs355.solution.model;
 
 import java.awt.Color;
 
+import static java.lang.Math.abs;
+
 /**
  * Created by Daniel on 9/5/14.
  */
 public class Rectangle extends Shape {
 
-    private Point2D TLcorner;
-    private Point2D initialCorner;
     private double height;
     private double width;
 
     public Rectangle() {
-        initialCorner = new Point2D();
-        TLcorner = new Point2D();
         height = 0;
         width = 0;
-        color = Color.WHITE;
     }
 
-    public Rectangle(Point2D _corner, double _width, double _height, Color _color) {
-        initialCorner = new Point2D(_corner.x, _corner.y);
-        TLcorner = new Point2D(_corner.x, _corner.y);
+    public Rectangle(Point2D _center, double _width, double _height, Color _color) {
         width = _width;
         height = _height;
         color = _color;
-    }
-
-    public Point2D getCorner() {
-        return TLcorner;
+        center = _center;
     }
 
     public double getHeight() {
@@ -40,35 +32,16 @@ public class Rectangle extends Shape {
         return width;
     }
 
-    public void setDimensions(Point2D mousePos) {
+    public void setDimensions(Point2D initial, Point2D mousePos) {
 
-        double height = mousePos.y - this.initialCorner.y;
-        double width = mousePos.x - this.initialCorner.x;
+        double height = mousePos.y - initial.y;
+        double width = mousePos.x - initial.x;
 
-        if(height < 0 && width < 0) {
-            this.TLcorner.y = this.initialCorner.y + height;
-            this.TLcorner.x = this.initialCorner.x + width;
-            this.height = height * -1;
-            this.width = width * -1;
-        }
-        else if(height < 0) {
-            this.TLcorner.y = this.initialCorner.y + height;
-            this.TLcorner.x = this.initialCorner.x;
-            this.height = height * -1;
-            this.width = width;
-        }
-        else if(width < 0) {
-            this.TLcorner.x = this.initialCorner.x + width;
-            this.TLcorner.y = this.initialCorner.y;
-            this.width = width * -1;
-            this.height = height;
-        }
-        else {
-            this.TLcorner.x = this.initialCorner.x;
-            this.TLcorner.y = this.initialCorner.y;
-            this.width = width;
-            this.height = height;
-        }
+        center.y = initial.y + ( height / 2 );
+        center.x = initial.x + ( width / 2 );
+
+        this.height = abs(height);
+        this.width = abs(width);
 
     }
 

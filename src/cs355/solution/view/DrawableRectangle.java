@@ -22,8 +22,8 @@ public class DrawableRectangle implements DrawableShape {
         width = r.getWidth();
         height = r.getHeight();
 
-        x = r.getCorner().x;
-        y = r.getCorner().y;
+        x = r.getCenter().x;
+        y = r.getCenter().y;
 
         color = r.getColor();
     }
@@ -31,6 +31,6 @@ public class DrawableRectangle implements DrawableShape {
     @Override
     public void drawOn( Graphics2D g) {
         g.setPaint(color);
-        g.fill(new Rectangle2D.Double(x, y, width, height));
+        g.fill(new Rectangle2D.Double(x-(width/2), y-(height/2), width, height));
     }
 }

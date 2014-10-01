@@ -51,4 +51,11 @@ public class ModelFacade extends Observable {
 
         return shapeIndex - 1;
     }
+
+    public int getShapeIndexAt(Point2D loc) {
+        List shapeList = getShapes();
+        shapeList.forEach((shape) -> {
+        });
+        return 0;
+    }
 }

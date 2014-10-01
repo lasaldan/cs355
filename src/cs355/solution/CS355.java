@@ -29,11 +29,12 @@ public class CS355
         Color defaultColor = Color.RED;
         ModelFacade modelFacade = new ModelFacade();
 
+        CS355Controller controller = new CS355Controller();
+        controller.setModel( modelFacade );
+
         IViewRefresher viewRefresher = new ViewRefresher();
         viewRefresher.setModel( modelFacade );
-
-        ICS355Controller controller = new CS355Controller();
-        controller.setModel( modelFacade );
+        viewRefresher.setController(controller);
 
         MouseListener mouseListener = new CS355MouseListener(controller);
         MouseMotionListener mouseMotionListener = new CS355MouseMotionListener(controller);

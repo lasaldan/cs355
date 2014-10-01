@@ -10,54 +10,46 @@ import static java.lang.Math.min;
  */
 public class Square extends Shape {
 
-    private Point2D TLcorner;
-    private Point2D initialCorner;
     private double size;
 
     public Square() {
-        initialCorner = new Point2D();
-        TLcorner = new Point2D();
         size = 0;
         color = Color.WHITE;
     }
 
-    public Square(Point2D _corner, double size, Color _color) {
-        initialCorner = new Point2D(_corner.x, _corner.y);
-        TLcorner = new Point2D(_corner.x, _corner.y);
-        this.size = size;
+    public Square(Point2D _center, double _size, Color _color) {
+        center = new Point2D(_center.x, _center.y);
+        size = _size;
         color = _color;
-    }
-
-    public Point2D getCorner() {
-        return TLcorner;
     }
 
     public double getSize() {
         return size;
     }
 
-    public void setDimensions(Point2D mousePos) {
+    public void setDimensions(Point2D initial, Point2D mousePos) {
 
-        double ydiff = mousePos.y - this.initialCorner.y;
-        double xdiff = mousePos.x - this.initialCorner.x;
 
-        size = min(abs(ydiff), abs(xdiff));
+        double height = mousePos.y - initial.y;
+        double width = mousePos.x - initial.x;
 
-        if(xdiff < 0 && ydiff < 0) {
-            this.TLcorner.y = this.initialCorner.y - size;
-            this.TLcorner.x = this.initialCorner.x - size;
+        this.size = min(abs(height), abs(width));
+
+        if(height < 0 && width < 0) {
+            center.y = initial.y - size/2;
+            center.x = initial.x - size/2;
         }
-        else if(ydiff < 0) {
-            this.TLcorner.y = this.initialCorner.y - size;
-            this.TLcorner.x = this.initialCorner.x;
+        else if(height < 0) {
+            center.y = initial.y - size/2;
+            center.x = initial.x + size/2;
         }
-        else if(xdiff < 0) {
-            this.TLcorner.x = this.initialCorner.x - size;
-            this.TLcorner.y = this.initialCorner.y;
+        else if(width < 0) {
+            center.y = initial.y + size/2;
+            center.x = initial.x - size/2;
         }
         else {
-            this.TLcorner.x = this.initialCorner.x;
-            this.TLcorner.y = this.initialCorner.y;
+            center.y = initial.y + size/2;
+            center.x = initial.x + size/2;
         }
 
     }

@@ -25,6 +25,11 @@ public class Point2D {
         y = newY;
     }
 
+    public Point2D(Point2D loc) {
+        this.x = loc.x;
+        this.y = loc.y;
+    }
+
     @Override
     public String toString()
     {

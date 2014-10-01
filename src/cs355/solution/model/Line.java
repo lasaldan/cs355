@@ -11,7 +11,6 @@ public class Line extends Shape {
     public Line() {
         startPoint = new Point2D();
         endPoint = new Point2D();
-        color = Color.WHITE;
     }
 
     public Line(Point2D _start, Point2D _end, Color _color) {

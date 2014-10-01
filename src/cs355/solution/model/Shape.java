@@ -8,6 +8,14 @@ import java.awt.*;
 public abstract class Shape {
 
     protected Color color;
+    protected Point2D center;
+    protected double rotation;
+
+    public Shape () {
+        color = Color.WHITE;
+        center = new Point2D(0,0);
+        rotation = 0;
+    }
 
     public void setColor(Color color) {
         this.color = color;
@@ -15,5 +23,21 @@ public abstract class Shape {
 
     public Color getColor() {
         return color;
+    }
+
+    public void setCenter(Point2D center) {
+        this.center = center;
+    }
+
+    public Point2D getCenter() {
+        return center;
+    }
+
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
+    }
+
+    public double getRotation() {
+        return rotation;
     }
 }

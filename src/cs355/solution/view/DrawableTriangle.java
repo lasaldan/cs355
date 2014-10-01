@@ -18,17 +18,25 @@ public class DrawableTriangle implements DrawableShape {
     double y2;
     double x3;
     double y3;
+
+    double centerX;
+    double centerY;
+
     Color color;
 
     public DrawableTriangle(Triangle t) {
-        x1 = t.getPt1().x;
-        y1 = t.getPt1().y;
 
-        x2 = t.getPt2().x;
-        y2 = t.getPt2().y;
+        centerX = t.getCenter().x;
+        centerY = t.getCenter().y;
 
-        x3 = t.getPt3().x;
-        y3 = t.getPt3().y;
+        x1 = t.getPt1().x + centerX;
+        y1 = t.getPt1().y + centerY;
+
+        x2 = t.getPt2().x + centerX;
+        y2 = t.getPt2().y + centerY;
+
+        x3 = t.getPt3().x + centerX;
+        y3 = t.getPt3().y + centerY;
 
         color = t.getColor();
     }

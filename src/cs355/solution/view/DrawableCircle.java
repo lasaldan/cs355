@@ -19,8 +19,8 @@ public class DrawableCircle implements DrawableShape {
 
     public DrawableCircle(Circle c) {
 
-        width = c.getRadius() * 2;
-        height = c.getRadius() * 2;
+        width = c.getSize();
+        height = c.getSize();
 
         x = c.getCenter().x - width / 2;
         y = c.getCenter().y - height / 2;

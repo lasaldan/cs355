@@ -6,6 +6,7 @@ package cs355;
 
 import cs355.solution.model.ModelFacade;
 import cs355.solution.model.Point2D;
+import cs355.solution.model.Shape;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -66,4 +67,6 @@ public interface ICS355Controller
     public void handleMouseDrag(Point2D point2D);
 
     public void setModel(ModelFacade model);
+
+    public Shape getTempShape();
 }
