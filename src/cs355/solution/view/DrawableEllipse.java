@@ -1,6 +1,7 @@
 package cs355.solution.view;
 
 import cs355.solution.model.Ellipse;
+import cs355.solution.model.Point2D;
 import cs355.solution.model.Rectangle;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ public class DrawableEllipse implements DrawableShape {
     double y;
     double width;
     double height;
+    double rotation;
     Color color;
 
     public DrawableEllipse(Ellipse e) {
@@ -23,15 +25,28 @@ public class DrawableEllipse implements DrawableShape {
         width = e.getWidth();
         height = e.getHeight();
 
-        x = e.getCenter().x - width / 2;
-        y = e.getCenter().y - height / 2;
+        x = e.getCenter().x;
+        y = e.getCenter().y;
 
         color = e.getColor();
+
+        rotation = e.getRotation();
     }
 
     @Override
     public void drawOn( Graphics2D g) {
         g.setPaint(color);
-        g.fill(new Ellipse2D.Double(x, y, width, height));
+        //g.fill(new Ellipse2D.Double(x, y, width, height));
+        g.fill(new Ellipse2D.Double(-(width/2), -(height/2), width, height));
+    }
+
+    @Override
+    public Point2D getCenter() {
+        return new Point2D(x,y);
+    }
+
+    @Override
+    public double getRotation() {
+        return rotation;
     }
 }

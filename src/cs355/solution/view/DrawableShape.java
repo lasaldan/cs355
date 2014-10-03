@@ -1,5 +1,6 @@
 package cs355.solution.view;
 
+import cs355.solution.model.Point2D;
 import cs355.solution.model.Shape;
 
 import java.awt.*;
@@ -10,5 +11,9 @@ import java.awt.*;
 public interface DrawableShape {
 
     public void drawOn(Graphics2D g);
+
+    public Point2D getCenter();
+
+    public double getRotation();
 
 }

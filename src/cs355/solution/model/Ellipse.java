@@ -18,6 +18,11 @@ public class Ellipse extends Shape {
         color = Color.WHITE;
     }
 
+    @Override
+    public boolean containsWorldPoint(Point2D hitLoc) {
+        return false;
+    }
+
     public Ellipse(Point2D _center, double _width, double _height, Color _color) {
         center = new Point2D(_center);
         width = _width;

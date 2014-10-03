@@ -12,7 +12,11 @@ public class Triangle extends Shape {
         pt1 = new Point2D();
         pt2 = new Point2D();
         pt3 = new Point2D();
-        color = Color.WHITE;
+    }
+
+    @Override
+    public boolean containsWorldPoint(Point2D hitLoc) {
+        return false;
     }
 
     public Triangle(Point2D pt1, Point2D pt2, Point2D pt3, Color _color) {

@@ -1,5 +1,6 @@
 package cs355.solution.view;
 
+import cs355.solution.model.Point2D;
 import cs355.solution.model.Rectangle;
 import cs355.solution.model.Square;
 
@@ -16,6 +17,8 @@ public class DrawableSquare implements DrawableShape {
     double size;
     Color color;
 
+    double rotation;
+
     public DrawableSquare(Square s) {
 
         size = s.getSize();
@@ -24,11 +27,23 @@ public class DrawableSquare implements DrawableShape {
         y = s.getCenter().y;
 
         color = s.getColor();
+
+        rotation = s.getRotation();
     }
 
     @Override
     public void drawOn( Graphics2D g) {
         g.setPaint(color);
-        g.fill(new Rectangle2D.Double(x-(size/2), y-(size/2), size, size));
+        g.fill(new Rectangle2D.Double(-(size/2), -(size/2), size, size));
+    }
+
+    @Override
+    public Point2D getCenter() {
+        return new Point2D(x,y);
+    }
+
+    @Override
+    public double getRotation() {
+        return rotation;
     }
 }

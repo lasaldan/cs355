@@ -4,9 +4,11 @@ import cs355.GUIFunctions;
 import cs355.ICS355Controller;
 import cs355.IViewRefresher;
 import cs355.solution.model.*;
+import cs355.solution.model.Rectangle;
 import cs355.solution.view.*;
 
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -30,13 +32,13 @@ public class ViewRefresher implements IViewRefresher, Observer {
     }
 
     @Override
-    public void refreshView(Graphics2D g2d) {
+    public void refreshView(Graphics2D g2d_fresh) {
+        Graphics2D g2d = (Graphics2D)g2d_fresh.create();
         List shapeList = new ArrayList( model.getShapes() );
 
-        shapeList.add( controller.getTempShape() );
+        shapeList.add(controller.getTempShape());
 
         shapeList.forEach((shape) -> {
-            // TODO FIX NULL INITIALIZATION
             DrawableShape drawable = null;
 
             if(shape instanceof Line)
@@ -57,14 +59,31 @@ public class ViewRefresher implements IViewRefresher, Observer {
             if(shape instanceof Triangle)
                 drawable = new DrawableTriangle((Triangle) shape);
 
-            // AffineTransform obToWorld = new AffineTransform();
-            // objToWorld.rotate(Math.PI / 4);
-            // objToWorld.translate(100,40);
-            // g.setTransform(objToWorld);
-            // g.fillRect(-width/w, -height/2, width, height);
 
-            if( drawable != null)
-            drawable.drawOn(g2d);
+            if( drawable != null) {
+                // create a new transformation (defaults to identity)
+                AffineTransform objToWorld = new AffineTransform();
+
+                // reset Transform to identity
+                g2d.setTransform(objToWorld);
+
+                if( ! (drawable instanceof DrawableLine) ) {
+
+                    // translate to its position in the world (last transformation)
+                    objToWorld.translate(drawable.getCenter().x, drawable.getCenter().y);
+
+                    // rotate to its orientation (first transformation)
+                    objToWorld.rotate(drawable.getRotation());
+
+                    // set the drawing transformation
+                    g2d.setTransform(objToWorld);
+                }
+                //if( drawable instanceof DrawableTriangle)
+                //    System.out.println(drawable.getCenter());
+
+                // and finally draw
+                drawable.drawOn(g2d);
+            }
         });
     }
 

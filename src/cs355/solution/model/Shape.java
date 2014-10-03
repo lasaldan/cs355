@@ -40,4 +40,6 @@ public abstract class Shape {
     public double getRotation() {
         return rotation;
     }
+
+    public abstract boolean containsWorldPoint(Point2D hitLoc);
 }

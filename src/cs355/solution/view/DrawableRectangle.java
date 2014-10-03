@@ -1,5 +1,6 @@
 package cs355.solution.view;
 
+import cs355.solution.model.Point2D;
 import cs355.solution.model.Rectangle;
 
 import java.awt.Color;
@@ -15,6 +16,9 @@ public class DrawableRectangle implements DrawableShape {
     double y;
     double width;
     double height;
+
+    double rotation;
+
     Color color;
 
     public DrawableRectangle(Rectangle r) {
@@ -26,11 +30,23 @@ public class DrawableRectangle implements DrawableShape {
         y = r.getCenter().y;
 
         color = r.getColor();
+
+        rotation = r.getRotation();
     }
 
     @Override
     public void drawOn( Graphics2D g) {
         g.setPaint(color);
-        g.fill(new Rectangle2D.Double(x-(width/2), y-(height/2), width, height));
+        g.fill(new Rectangle2D.Double(-(width/2), -(height/2), width, height));
+    }
+
+    @Override
+    public Point2D getCenter() {
+        return new Point2D(x,y);
+    }
+
+    @Override
+    public double getRotation() {
+        return rotation;
     }
 }

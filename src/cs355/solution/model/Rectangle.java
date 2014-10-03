@@ -17,6 +17,11 @@ public class Rectangle extends Shape {
         width = 0;
     }
 
+    @Override
+    public boolean containsWorldPoint(Point2D hitLoc) {
+        return false;
+    }
+
     public Rectangle(Point2D _center, double _width, double _height, Color _color) {
         width = _width;
         height = _height;

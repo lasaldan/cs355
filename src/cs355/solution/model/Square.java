@@ -17,6 +17,11 @@ public class Square extends Shape {
         color = Color.WHITE;
     }
 
+    @Override
+    public boolean containsWorldPoint(Point2D hitLoc) {
+        return false;
+    }
+
     public Square(Point2D _center, double _size, Color _color) {
         center = new Point2D(_center.x, _center.y);
         size = _size;

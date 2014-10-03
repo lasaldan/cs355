@@ -13,9 +13,14 @@ public class Line extends Shape {
         endPoint = new Point2D();
     }
 
+    @Override
+    public boolean containsWorldPoint(Point2D hitLoc) {
+        return false;
+    }
+
     public Line(Point2D _start, Point2D _end, Color _color) {
-        startPoint = _start;
-        endPoint = _end;
+        startPoint = new Point2D(_start);
+        endPoint = new Point2D(_end);
         color = _color;
     }
 
