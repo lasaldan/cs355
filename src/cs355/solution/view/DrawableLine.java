@@ -47,4 +47,9 @@ public class DrawableLine implements DrawableShape {
     public double getRotation() {
         return 0;
     }
+
+    @Override
+    public void drawHandlesOn(Graphics2D g2d) {
+
+    }
 }

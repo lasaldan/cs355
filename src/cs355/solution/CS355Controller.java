@@ -2,15 +2,7 @@ package cs355.solution;
 
 import cs355.GUIFunctions;
 import cs355.ICS355Controller;
-import cs355.solution.model.Circle;
-import cs355.solution.model.Ellipse;
-import cs355.solution.model.Line;
-import cs355.solution.model.ModelFacade;
-import cs355.solution.model.Point2D;
-import cs355.solution.model.Rectangle;
-import cs355.solution.model.Shape;
-import cs355.solution.model.Square;
-import cs355.solution.model.Triangle;
+import cs355.solution.model.*;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -32,11 +24,16 @@ public class CS355Controller implements ICS355Controller {
 
     public CS355Controller() {
         currentColor = Color.WHITE;
-        lineButtonHit();
+        currentShapeIndex = -1;
     }
 
     @Override
     public void colorButtonHit(Color c) {
+        if(currentShapeIndex != -1) {
+            IShape temp = model.getShape(currentShapeIndex);
+            temp.setColor(c);
+            model.setShape(currentShapeIndex, temp);
+        }
         currentColor = c;
         GUIFunctions.changeSelectedColor(c);
     }
@@ -44,32 +41,43 @@ public class CS355Controller implements ICS355Controller {
     @Override
     public void triangleButtonHit() {
         currentState = CS355State.DRAWING_TRIANGLE_FIRST_POINT;
+        currentShapeIndex = -1;
+        GUIFunctions.refresh();
     }
 
     @Override
     public void squareButtonHit() {
         currentState = CS355State.DRAWING_SQUARE_FIRST_POINT;
+        currentShapeIndex = -1;
+        GUIFunctions.refresh();
     }
 
     @Override
     public void rectangleButtonHit() {
         currentState = CS355State.DRAWING_RECTANGLE_FIRST_POINT;
+        currentShapeIndex = -1;
+        GUIFunctions.refresh();
     }
 
     @Override
     public void circleButtonHit() {
         currentState = CS355State.DRAWING_CIRCLE_FIRST_POINT;
+        currentShapeIndex = -1;
+        GUIFunctions.refresh();
     }
 
     @Override
     public void ellipseButtonHit() {
         currentState = CS355State.DRAWING_ELLIPSE_FIRST_POINT;
+        currentShapeIndex = -1;
+        GUIFunctions.refresh();
     }
 
     @Override
     public void lineButtonHit() {
         currentState = CS355State.DRAWING_LINE_FIRST_POINT;
-
+        currentShapeIndex = -1;
+        GUIFunctions.refresh();
     }
 
     @Override
@@ -169,6 +177,7 @@ public class CS355Controller implements ICS355Controller {
 
             case SELECTING:
                 currentShapeIndex = model.getShapeIndexAt(loc);
+                GUIFunctions.refresh();
                 break;
         }
     }

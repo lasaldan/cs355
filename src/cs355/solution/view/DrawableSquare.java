@@ -34,7 +34,7 @@ public class DrawableSquare implements DrawableShape {
     @Override
     public void drawOn( Graphics2D g) {
         g.setPaint(color);
-        g.fill(new Rectangle2D.Double(-(size/2), -(size/2), size, size));
+        g.fill(new Rectangle2D.Double(-(size / 2), -(size / 2), size, size));
     }
 
     @Override
@@ -45,5 +45,14 @@ public class DrawableSquare implements DrawableShape {
     @Override
     public double getRotation() {
         return rotation;
+    }
+
+    @Override
+    public void drawHandlesOn(Graphics2D g) {
+        g.setPaint(Color.WHITE);
+        g.draw(new Rectangle2D.Double(-4-(size / 2), -4-(size / 2), 8, 8));
+        g.draw(new Rectangle2D.Double(-4+(size / 2), -4-(size / 2), 8, 8));
+        g.draw(new Rectangle2D.Double(-4-(size / 2), -4+(size / 2), 8, 8));
+        g.draw(new Rectangle2D.Double(-4+(size / 2), -4+(size / 2), 8, 8));
     }
 }

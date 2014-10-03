@@ -48,4 +48,13 @@ public class DrawableCircle implements DrawableShape {
     public double getRotation() {
         return rotation;
     }
+
+    @Override
+    public void drawHandlesOn(Graphics2D g) {
+        g.setPaint(Color.WHITE);
+        g.draw(new Rectangle2D.Double(-4-(size / 2), -4-(size / 2), 8, 8));
+        g.draw(new Rectangle2D.Double(-4+(size / 2), -4-(size / 2), 8, 8));
+        g.draw(new Rectangle2D.Double(-4-(size / 2), -4+(size / 2), 8, 8));
+        g.draw(new Rectangle2D.Double(-4+(size / 2), -4+(size / 2), 8, 8));
+    }
 }

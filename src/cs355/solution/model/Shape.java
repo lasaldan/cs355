@@ -1,11 +1,11 @@
 package cs355.solution.model;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Created by Daniel on 9/6/14.
  */
-public abstract class Shape {
+public abstract class Shape implements IShape {
 
     protected Color color;
     protected Point2D center;
@@ -41,5 +41,5 @@ public abstract class Shape {
         return rotation;
     }
 
-    public abstract boolean containsWorldPoint(Point2D hitLoc);
+    public abstract boolean containsHitPoint(Point2D hitLoc);
 }

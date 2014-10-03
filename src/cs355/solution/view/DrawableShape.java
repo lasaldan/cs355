@@ -16,4 +16,5 @@ public interface DrawableShape {
 
     public double getRotation();
 
+    public void drawHandlesOn(Graphics2D g2d);
 }

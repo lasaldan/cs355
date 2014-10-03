@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Daniel on 9/6/14.
  */
 public class Shapes implements Iterable {
-    private List<Shape> shapeList;
+    private List<IShape> shapeList;
 
     public Shapes() {
         shapeList = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Shapes implements Iterable {
         return shapeList.size();
     }
 
-    public Shape get( int index ) {
+    public IShape get( int index ) {
         return shapeList.get( index );
     }
 

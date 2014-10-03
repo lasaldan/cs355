@@ -19,7 +19,13 @@ public class Circle extends Shape {
     }
 
     @Override
-    public boolean containsWorldPoint(Point2D hitLoc) {
+    public boolean containsHitPoint(Point2D hitLoc) {
+
+        double distanceFromCenter = ((hitLoc.y)*(hitLoc.y) + (hitLoc.x)*(hitLoc.x));
+
+        if( distanceFromCenter <= (size/2)*(size/2) )
+            return true;
+
         return false;
     }
 

@@ -14,7 +14,7 @@ public class Line extends Shape {
     }
 
     @Override
-    public boolean containsWorldPoint(Point2D hitLoc) {
+    public boolean containsHitPoint(Point2D hitLoc) {
         return false;
     }
 

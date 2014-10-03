@@ -1,5 +1,6 @@
 package cs355.solution;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import cs355.GUIFunctions;
 import cs355.ICS355Controller;
 import cs355.IViewRefresher;
@@ -37,6 +38,8 @@ public class ViewRefresher implements IViewRefresher, Observer {
         List shapeList = new ArrayList( model.getShapes() );
 
         shapeList.add(controller.getTempShape());
+
+        int selectedShape = controller.currentShapeIndex;
 
         shapeList.forEach((shape) -> {
             DrawableShape drawable = null;
@@ -83,6 +86,9 @@ public class ViewRefresher implements IViewRefresher, Observer {
 
                 // and finally draw
                 drawable.drawOn(g2d);
+
+                if(selectedShape != -1 && selectedShape == shapeList.indexOf(shape))
+                    drawable.drawHandlesOn(g2d);
             }
         });
     }

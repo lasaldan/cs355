@@ -1,5 +1,6 @@
 package cs355.solution.model;
 
+import java.awt.geom.AffineTransform;
 import java.util.Observable;
 import java.util.List;
 import java.util.concurrent.Semaphore;
@@ -16,14 +17,14 @@ public class ModelFacade extends Observable {
         return shapes.getShapes();
     }
 
-    public Shape getShape(int index) {
+    public IShape getShape(int index) {
         return shapes.get(index);
     }
 
-    public void setShape(int index, Shape shape) {
+    public void setShape(int index, IShape shape) {
         setChanged();
         notifyObservers();
-        shapes.set(index, shape);
+        shapes.set(index, (Shape) shape);
     }
 
     public int addShape(Shape s) {
@@ -52,10 +53,33 @@ public class ModelFacade extends Observable {
         return shapeIndex - 1;
     }
 
-    public int getShapeIndexAt(Point2D loc) {
-        List shapeList = getShapes();
+    public int getShapeIndexAt( Point2D loc ) {
+        List<IShape> shapeList = getShapes();
+        final int[] index = new int[1];
+        index[0] = -1;
+
         shapeList.forEach((shape) -> {
+
+            //transform clickPoint to local coordinates
+            Point2D localCoordinates = new Point2D();
+
+            // create a new transformation (defaults to identity)
+            AffineTransform worldToObj = new AffineTransform();
+
+            // rotate back from its orientation (last transformation)
+            worldToObj.rotate(-shape.getRotation());
+
+            // translate back from its position in the world (first transformation)
+            worldToObj.translate(-shape.getCenter().x,-shape.getCenter().y);
+
+            // and transform point from world to object
+            worldToObj.transform(loc, localCoordinates);
+
+            if(shape.containsHitPoint(localCoordinates))
+                index[0] = shapeList.indexOf(shape);
+
         });
-        return 0;
+
+        return index[0];
     }
 }

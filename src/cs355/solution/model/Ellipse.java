@@ -19,7 +19,14 @@ public class Ellipse extends Shape {
     }
 
     @Override
-    public boolean containsWorldPoint(Point2D hitLoc) {
+    public boolean containsHitPoint(Point2D hitLoc) {
+
+        double xComp = ((hitLoc.x)*(hitLoc.x)) / ((width/2)*(width/2));
+        double yComp = ((hitLoc.y)*(hitLoc.y)) / ((height/2)*(height/2));
+
+        if( xComp + yComp <= 1 )
+            return true;
+
         return false;
     }
 

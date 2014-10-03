@@ -72,4 +72,9 @@ public class DrawableTriangle implements DrawableShape {
     public double getRotation() {
         return rotation;
     }
+
+    @Override
+    public void drawHandlesOn(Graphics2D g2d) {
+
+    }
 }
