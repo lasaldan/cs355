@@ -175,10 +175,6 @@ public class CS355Controller implements ICS355Controller {
                 currentState = CS355State.DRAWING_TRIANGLE_FIRST_POINT;
                 break;
 
-            case SELECTING:
-                currentShapeIndex = model.getShapeIndexAt(loc);
-                GUIFunctions.refresh();
-                break;
         }
     }
 
@@ -215,31 +211,46 @@ public class CS355Controller implements ICS355Controller {
                 temp = new Circle(loc, 0, currentColor);
                 currentState = CS355State.DRAWING_CIRCLE_SECOND_POINT;
                 break;
+
+            case SELECTING:
+                first = loc;
+                currentShapeIndex = model.getShapeIndexAt(loc);
+
+                if(currentShapeIndex != -1)
+                    GUIFunctions.changeSelectedColor(model.getShape(currentShapeIndex).getColor());
+
+                GUIFunctions.refresh();
+                currentState = CS355State.DRAGGING_SELECTION;
+                break;
         }
     }
 
     @Override
-    public void handleMouseDrag(Point2D point2D) {
+    public void handleMouseDrag(Point2D loc) {
 
         switch (currentState) {
             case DRAWING_LINE_SECOND_POINT:
-                ((Line) temp).setEndPoint(point2D);
+                ((Line) temp).setEndPoint(loc);
                 break;
 
             case DRAWING_RECTANGLE_SECOND_POINT:
-                ((Rectangle) temp).setDimensions(first, point2D);
+                ((Rectangle) temp).setDimensions(first, loc);
                 break;
 
             case DRAWING_SQUARE_SECOND_POINT:
-                ((Square) temp).setDimensions(first, point2D);
+                ((Square) temp).setDimensions(first, loc);
                 break;
 
             case DRAWING_ELLIPSE_SECOND_POINT:
-                ((Ellipse) temp).setDimensions(first, point2D);
+                ((Ellipse) temp).setDimensions(first, loc);
                 break;
 
             case DRAWING_CIRCLE_SECOND_POINT:
-                ((Circle) temp).setDimensions(first, point2D);
+                ((Circle) temp).setDimensions(first, loc);
+                break;
+
+            case DRAGGING_SELECTION:
+                System.out.println("Dragging");
                 break;
 
 
@@ -279,6 +290,10 @@ public class CS355Controller implements ICS355Controller {
                 model.addShape( temp );
                 currentState = CS355State.DRAWING_CIRCLE_FIRST_POINT;
                 temp = null;
+                break;
+
+            case DRAGGING_SELECTION:
+                currentState = CS355State.SELECTING;
                 break;
 
         }

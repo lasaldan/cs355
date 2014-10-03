@@ -56,5 +56,7 @@ public class DrawableCircle implements DrawableShape {
         g.draw(new Rectangle2D.Double(-4+(size / 2), -4-(size / 2), 8, 8));
         g.draw(new Rectangle2D.Double(-4-(size / 2), -4+(size / 2), 8, 8));
         g.draw(new Rectangle2D.Double(-4+(size / 2), -4+(size / 2), 8, 8));
+        g.setPaint(Color.GRAY);
+        g.draw(new Rectangle2D.Double(-(size/2), -(size/2), size, size));
     }
 }

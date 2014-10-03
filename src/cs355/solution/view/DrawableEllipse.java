@@ -57,5 +57,7 @@ public class DrawableEllipse implements DrawableShape {
         g.draw(new Rectangle2D.Double(-4+(width / 2), -4-(height / 2), 8, 8));
         g.draw(new Rectangle2D.Double(-4-(width / 2), -4+(height / 2), 8, 8));
         g.draw(new Rectangle2D.Double(-4+(width / 2), -4+(height / 2), 8, 8));
+        g.setPaint(Color.GRAY);
+        g.draw(new Rectangle2D.Double(-(width/2), -(height/2), width, height));
     }
 }
