@@ -216,8 +216,10 @@ public class CS355Controller implements ICS355Controller {
                 first = loc;
                 currentShapeIndex = model.getShapeIndexAt(loc);
 
-                if(currentShapeIndex != -1)
+                if(currentShapeIndex != -1) {
                     GUIFunctions.changeSelectedColor(model.getShape(currentShapeIndex).getColor());
+                    second = model.getShape(currentShapeIndex).getCenter();
+                }
 
                 GUIFunctions.refresh();
                 currentState = CS355State.DRAGGING_SELECTION;
@@ -250,7 +252,18 @@ public class CS355Controller implements ICS355Controller {
                 break;
 
             case DRAGGING_SELECTION:
-                System.out.println("Dragging");
+                double xdiff = loc.getX() - first.getX();
+                double ydiff = loc.getY() - first.getY();
+
+                if(currentShapeIndex != -1) {
+                    IShape temp = model.getShape(currentShapeIndex);
+                    double x = second.getX() + xdiff;
+                    double y = second.getY() + ydiff;
+
+                    temp.setCenter(new Point2D(x, y));
+
+                    model.setShape(currentShapeIndex, temp);
+                }
                 break;
 
 

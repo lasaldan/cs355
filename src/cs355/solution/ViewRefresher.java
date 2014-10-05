@@ -22,6 +22,8 @@ public class ViewRefresher implements IViewRefresher, Observer {
 
     ModelFacade model;
     CS355Controller controller;
+    DrawableShape tempShape;
+    AffineTransform tempTransform;
 
     public ViewRefresher () {
         model = null;
@@ -30,6 +32,8 @@ public class ViewRefresher implements IViewRefresher, Observer {
     public ViewRefresher (ModelFacade _model) {
         model = _model;
         model.addObserver(this);
+        tempShape = null;
+        tempTransform = null;
     }
 
     @Override
@@ -87,10 +91,19 @@ public class ViewRefresher implements IViewRefresher, Observer {
                 // and finally draw
                 drawable.drawOn(g2d);
 
-                if(selectedShape != -1 && selectedShape == shapeList.indexOf(shape))
-                    drawable.drawHandlesOn(g2d);
+                if(selectedShape != -1 && selectedShape == shapeList.indexOf(shape)) {
+                    tempShape = drawable;
+                    tempTransform = objToWorld;
+                }
+
             }
         });
+
+        System.out.println(selectedShape);
+        if(selectedShape != -1 && tempShape != null) {
+            g2d.setTransform(tempTransform);
+            tempShape.drawHandlesOn(g2d);
+        }
     }
 
     @Override
