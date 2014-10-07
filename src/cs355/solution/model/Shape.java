@@ -1,5 +1,7 @@
 package cs355.solution.model;
 
+import cs355.GUIFunctions;
+
 import java.awt.Color;
 
 /**
@@ -41,5 +43,5 @@ public abstract class Shape implements IShape {
         return rotation;
     }
 
-    public abstract boolean containsHitPoint(Point2D hitLoc);
+    public abstract boolean containsHitPoint(Point2D hitLoc, double tolerance);
 }

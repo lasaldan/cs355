@@ -5,8 +5,11 @@ import cs355.solution.model.Triangle;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 /**
  * Created by Daniel on 9/6/14.
@@ -73,8 +76,33 @@ public class DrawableTriangle implements DrawableShape {
         return rotation;
     }
 
-    @Override
-    public void drawHandlesOn(Graphics2D g2d) {
+    private double maxHeight() {
+        return Math.max(Math.max(Math.abs(y1), Math.abs(y2)),Math.abs(y3));
+    }
 
+    @Override
+    public Point2D drawRotationHandle(Graphics2D g) {
+        g.setPaint(Color.WHITE);
+        g.draw(new Ellipse2D.Double(-4, -16 - maxHeight(), 8, 8));
+        return new Point2D(0,-12-maxHeight());
+    }
+    @Override
+    public List drawScaleHandles(Graphics2D g) {
+        g.setPaint(Color.WHITE);
+        g.draw(new Rectangle2D.Double(-4+x1, -4+y1, 8, 8));
+        g.draw(new Rectangle2D.Double(-4+x2, -4+y2, 8, 8));
+        g.draw(new Rectangle2D.Double(-4+x3, -4+y3, 8, 8));
+
+        g.setPaint(Color.GRAY);
+        GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD, 3);
+        path.moveTo(x1,y1);
+        path.lineTo(x2,y2);
+        path.lineTo(x3,y3);
+        path.closePath();
+
+        g.setPaint(color);
+        g.draw(path);
+
+        return null;
     }
 }

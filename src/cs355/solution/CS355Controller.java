@@ -5,8 +5,10 @@ import cs355.ICS355Controller;
 import cs355.solution.model.*;
 
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Daniel on 9/5/14.
@@ -20,11 +22,24 @@ public class CS355Controller implements ICS355Controller {
     ModelFacade model;
     Point2D first;
     Point2D second;
+    double tolerance;
 
+    List<Point2D> scaleHandles;
+    Point2D rotationHandle;
 
     public CS355Controller() {
         currentColor = Color.WHITE;
         currentShapeIndex = -1;
+        tolerance = 4;
+    }
+
+    public void setScaleHandles(List<Point2D> scaleHandles) {
+        this.scaleHandles = scaleHandles;
+    }
+
+    public void setRotationHandle(Point2D rotationHandle) {
+        //System.out.println(rotationHandle);
+        this.rotationHandle = rotationHandle;
     }
 
     @Override
@@ -214,7 +229,14 @@ public class CS355Controller implements ICS355Controller {
 
             case SELECTING:
                 first = loc;
-                currentShapeIndex = model.getShapeIndexAt(loc);
+
+                if(currentShapeIndex != -1 &&
+                   isNear(worldToObject(loc,model.getShape(currentShapeIndex)), rotationHandle, tolerance)) {
+                    currentState = CS355State.ROTATING;
+                    break;
+                }
+
+                currentShapeIndex = getShapeIndexAt(loc, tolerance);
 
                 if(currentShapeIndex != -1) {
                     GUIFunctions.changeSelectedColor(model.getShape(currentShapeIndex).getColor());
@@ -225,6 +247,27 @@ public class CS355Controller implements ICS355Controller {
                 currentState = CS355State.DRAGGING_SELECTION;
                 break;
         }
+    }
+
+    public boolean isNear(Point2D one, Point2D two, double tolerance) {
+
+        if(one == null || two == null)
+            return false;
+
+        double diffX = one.getX() - two.getX();
+        double diffY = one.getY() - two.getY();
+
+        //System.out.println("is near?");
+        //System.out.println(one);
+        //System.out.println(two);
+        //System.out.println(tolerance);
+
+        if(Math.sqrt((diffX * diffX) + (diffY * diffY)) <= tolerance) {
+            //System.out.println("Near");
+            return true;
+        }
+        //System.out.println("Not Near");
+        return false;
     }
 
     @Override
@@ -265,7 +308,18 @@ public class CS355Controller implements ICS355Controller {
                     model.setShape(currentShapeIndex, temp);
                 }
                 break;
+            case ROTATING:
 
+                IShape temp = model.getShape(currentShapeIndex);
+
+                double diffX = temp.getCenter().getX() - loc.getX();
+                double diffY = temp.getCenter().getY() - loc.getY();
+
+                temp.setRotation(Math.atan2(-diffX, diffY));
+
+                model.setShape(currentShapeIndex, temp);
+
+                break;
 
         }
         GUIFunctions.refresh();
@@ -309,6 +363,10 @@ public class CS355Controller implements ICS355Controller {
                 currentState = CS355State.SELECTING;
                 break;
 
+            case ROTATING:
+                currentState = CS355State.SELECTING;
+                break;
+
         }
     }
 
@@ -320,5 +378,42 @@ public class CS355Controller implements ICS355Controller {
     @Override
     public Shape getTempShape() {
         return temp;
+    }
+
+    public Point2D worldToObject(Point2D loc, IShape shape) {
+
+        Point2D localCoordinates = new Point2D();
+
+        // create a new transformation (defaults to identity)
+        AffineTransform worldToObj = new AffineTransform();
+
+        // rotate back from its orientation (last transformation)
+        worldToObj.rotate(-shape.getRotation());
+
+        // translate back from its position in the world (first transformation)
+        worldToObj.translate(-shape.getCenter().x,-shape.getCenter().y);
+
+        // and transform point from world to object
+        worldToObj.transform(loc, localCoordinates);
+
+        return localCoordinates;
+    }
+
+    public int getShapeIndexAt( Point2D loc, double tolerance ) {
+        List<IShape> shapeList = model.getShapes();
+        final int[] index = new int[1];
+        index[0] = -1;
+
+        shapeList.forEach((shape) -> {
+
+            //transform clickPoint to local coordinates
+            Point2D localCoordinates = worldToObject(loc, shape);
+
+            if(shape.containsHitPoint(localCoordinates, tolerance ))
+                index[0] = shapeList.indexOf(shape);
+
+        });
+
+        return index[0];
     }
 }

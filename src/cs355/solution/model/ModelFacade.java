@@ -52,34 +52,4 @@ public class ModelFacade extends Observable {
 
         return shapeIndex - 1;
     }
-
-    public int getShapeIndexAt( Point2D loc ) {
-        List<IShape> shapeList = getShapes();
-        final int[] index = new int[1];
-        index[0] = -1;
-
-        shapeList.forEach((shape) -> {
-
-            //transform clickPoint to local coordinates
-            Point2D localCoordinates = new Point2D();
-
-            // create a new transformation (defaults to identity)
-            AffineTransform worldToObj = new AffineTransform();
-
-            // rotate back from its orientation (last transformation)
-            worldToObj.rotate(-shape.getRotation());
-
-            // translate back from its position in the world (first transformation)
-            worldToObj.translate(-shape.getCenter().x,-shape.getCenter().y);
-
-            // and transform point from world to object
-            worldToObj.transform(loc, localCoordinates);
-
-            if(shape.containsHitPoint(localCoordinates))
-                index[0] = shapeList.indexOf(shape);
-
-        });
-
-        return index[0];
-    }
 }

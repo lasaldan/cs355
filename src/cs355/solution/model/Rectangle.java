@@ -18,7 +18,7 @@ public class Rectangle extends Shape {
     }
 
     @Override
-    public boolean containsHitPoint(Point2D hitLoc) {
+    public boolean containsHitPoint(Point2D hitLoc, double tolerance) {
         if(abs(hitLoc.x) <= width/2 &&
             abs(hitLoc.y) <= height/2 )
             return true;

@@ -3,7 +3,7 @@ package cs355.solution.model;
 import java.awt.Color;
 
 /**
- * Created by Daniel on 9/6/14.
+ * Created by Daniel on 9/6/14. ;)
  */
 public interface IShape {
 
@@ -19,5 +19,5 @@ public interface IShape {
 
     public double getRotation();
 
-    public boolean containsHitPoint(Point2D hitLoc);
+    public boolean containsHitPoint(Point2D hitLoc, double tolerance);
 }

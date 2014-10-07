@@ -74,17 +74,16 @@ public class ViewRefresher implements IViewRefresher, Observer {
                 // reset Transform to identity
                 g2d.setTransform(objToWorld);
 
-                if( ! (drawable instanceof DrawableLine) ) {
 
-                    // translate to its position in the world (last transformation)
-                    objToWorld.translate(drawable.getCenter().x, drawable.getCenter().y);
+                // translate to its position in the world (last transformation)
+                objToWorld.translate(drawable.getCenter().x, drawable.getCenter().y);
 
-                    // rotate to its orientation (first transformation)
-                    objToWorld.rotate(drawable.getRotation());
+                // rotate to its orientation (first transformation)
+                objToWorld.rotate(drawable.getRotation());
 
-                    // set the drawing transformation
-                    g2d.setTransform(objToWorld);
-                }
+                // set the drawing transformation
+                g2d.setTransform(objToWorld);
+
                 //if( drawable instanceof DrawableTriangle)
                 //    System.out.println(drawable.getCenter());
 
@@ -99,10 +98,11 @@ public class ViewRefresher implements IViewRefresher, Observer {
             }
         });
 
-        System.out.println(selectedShape);
+        //System.out.println(selectedShape);
         if(selectedShape != -1 && tempShape != null) {
             g2d.setTransform(tempTransform);
-            tempShape.drawHandlesOn(g2d);
+            controller.setRotationHandle( tempShape.drawRotationHandle(g2d) );
+            controller.setScaleHandles( tempShape.drawScaleHandles(g2d));
         }
     }
 

@@ -14,8 +14,21 @@ public class Triangle extends Shape {
         pt3 = new Point2D();
     }
 
+    private boolean isDotPositive(Point2D one, Point2D two, Point2D three ) {
+        if (((one.x - three.x) * (two.y - three.y) - (two.x - three.x) * (one.y - three.y)) > 0)
+            return true;
+        return false;
+    }
     @Override
-    public boolean containsHitPoint(Point2D hitLoc) {
+    public boolean containsHitPoint(Point2D hitLoc, double tolerance) {
+
+        boolean test1 = isDotPositive(hitLoc, pt1, pt2);
+        boolean test2 = isDotPositive(hitLoc, pt2, pt3);
+        boolean test3 = isDotPositive(hitLoc, pt3, pt1);
+
+        if((test1 == test2) && (test2 == test3))
+            return true;
+
         return false;
     }
 

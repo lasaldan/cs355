@@ -6,7 +6,7 @@ import static java.lang.Math.min;
 import static java.lang.Math.abs;
 
 /**
- * Created by Daniel on 9/5/14.
+ * Created by Daniel on 9/5/14. ;)
  */
 public class Circle extends Shape {
 
@@ -19,14 +19,12 @@ public class Circle extends Shape {
     }
 
     @Override
-    public boolean containsHitPoint(Point2D hitLoc) {
+    public boolean containsHitPoint(Point2D hitLoc, double tolerance) {
 
         double distanceFromCenter = ((hitLoc.y)*(hitLoc.y) + (hitLoc.x)*(hitLoc.x));
 
-        if( distanceFromCenter <= (size/2)*(size/2) )
-            return true;
+        return distanceFromCenter <= (size / 2) * (size / 2);
 
-        return false;
     }
 
     public Circle(Point2D _center, double _size, Color _color) {

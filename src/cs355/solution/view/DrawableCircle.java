@@ -4,9 +4,11 @@ import cs355.solution.model.Circle;
 import cs355.solution.model.Ellipse;
 import cs355.solution.model.Point2D;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 /**
  * Created by Daniel on 9/6/14.
@@ -50,13 +52,25 @@ public class DrawableCircle implements DrawableShape {
     }
 
     @Override
-    public void drawHandlesOn(Graphics2D g) {
+    public Point2D drawRotationHandle(Graphics2D g) {
         g.setPaint(Color.WHITE);
-        g.draw(new Rectangle2D.Double(-4-(size / 2), -4-(size / 2), 8, 8));
+        g.draw(new Ellipse2D.Double(-4, -16-(size / 2), 8, 8));
+
+        return new Point2D(0, -12-(size / 2));
+    }
+
+    @Override
+    public List drawScaleHandles(Graphics2D g) {
+        g.setPaint(Color.WHITE);
+        g.draw(new Rectangle2D.Double(-4 - (size / 2), -4 - (size / 2), 8, 8));
         g.draw(new Rectangle2D.Double(-4+(size / 2), -4-(size / 2), 8, 8));
         g.draw(new Rectangle2D.Double(-4-(size / 2), -4+(size / 2), 8, 8));
         g.draw(new Rectangle2D.Double(-4+(size / 2), -4+(size / 2), 8, 8));
         g.setPaint(Color.GRAY);
         g.draw(new Rectangle2D.Double(-(size/2), -(size/2), size, size));
+
+        g.draw(new Ellipse2D.Double(-(size/2), -(size/2), size, size));
+
+        return null;
     }
 }

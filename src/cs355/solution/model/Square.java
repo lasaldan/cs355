@@ -18,7 +18,7 @@ public class Square extends Shape {
     }
 
     @Override
-    public boolean containsHitPoint(Point2D hitLoc) {
+    public boolean containsHitPoint(Point2D hitLoc, double tolerance) {
         if(abs(hitLoc.x) <= size/2 &&
            abs(hitLoc.y) <= size/2 )
             return true;

@@ -5,7 +5,7 @@ import java.awt.*;
 import static java.lang.Math.abs;
 
 /**
- * Created by Daniel on 9/5/14.
+ * Created by Daniel on 9/5/14. ;)
  */
 public class Ellipse extends Shape {
 
@@ -19,15 +19,13 @@ public class Ellipse extends Shape {
     }
 
     @Override
-    public boolean containsHitPoint(Point2D hitLoc) {
+    public boolean containsHitPoint(Point2D hitLoc, double tolerance) {
 
         double xComp = ((hitLoc.x)*(hitLoc.x)) / ((width/2)*(width/2));
         double yComp = ((hitLoc.y)*(hitLoc.y)) / ((height/2)*(height/2));
 
-        if( xComp + yComp <= 1 )
-            return true;
+        return xComp + yComp <= 1;
 
-        return false;
     }
 
     public Ellipse(Point2D _center, double _width, double _height, Color _color) {
