@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ public class DrawableSquare implements DrawableShape {
     double y;
     double size;
     Color color;
+    double handleSize;
 
     double rotation;
 
@@ -32,6 +34,8 @@ public class DrawableSquare implements DrawableShape {
         color = s.getColor();
 
         rotation = s.getRotation();
+
+        handleSize = 8;
     }
 
     @Override
@@ -53,21 +57,32 @@ public class DrawableSquare implements DrawableShape {
     @Override
     public Point2D drawRotationHandle(Graphics2D g) {
         g.setPaint(Color.WHITE);
-        g.draw(new Ellipse2D.Double(-4, -16-(size / 2), 8, 8));
+        g.draw(new Ellipse2D.Double(-handleSize/2, -handleSize*2-(size / 2), handleSize, handleSize));
 
-        return new Point2D(0,-12-(size / 2));
+        // Return the Center of Rotation Handle
+        return new Point2D(0,-handleSize - handleSize/2 -(size / 2));
     }
 
     @Override
     public List drawScaleHandles(Graphics2D g) {
+
+        ArrayList<Point2D> corners = new ArrayList();
+        corners.add(new Point2D(-size/2,-size/2)); // TL
+        corners.add(new Point2D( size/2,-size/2)); // TR
+        corners.add(new Point2D( size/2, size/2)); // BR
+        corners.add(new Point2D(-size/2, size/2)); // BL
+
         g.setPaint(Color.WHITE);
-        g.draw(new Rectangle2D.Double(-4-(size / 2), -4-(size / 2), 8, 8));
-        g.draw(new Rectangle2D.Double(-4+(size / 2), -4-(size / 2), 8, 8));
-        g.draw(new Rectangle2D.Double(-4-(size / 2), -4+(size / 2), 8, 8));
-        g.draw(new Rectangle2D.Double(-4+(size / 2), -4+(size / 2), 8, 8));
+
+        // Draw Handles at corners
+        for(Point2D corner : corners) {
+            g.draw(new Rectangle2D.Double(-handleSize/2+corner.getX(), -handleSize/2+corner.getY(),handleSize,handleSize));
+        }
+
+        // Outline Shape
         g.setPaint(Color.GRAY);
         g.draw(new Rectangle2D.Double(-(size / 2), -(size / 2), size, size));
 
-        return null;
+        return corners;
     }
 }

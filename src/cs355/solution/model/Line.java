@@ -30,6 +30,11 @@ public class Line extends Shape {
         return false;
     }
 
+    @Override
+    public void setCorner(Point2D corner) {
+
+    }
+
     public Line(Point2D _start, Point2D _end, Color _color) {
         startPoint = new Point2D(_start);
         endPoint = new Point2D(_end);
@@ -73,6 +78,7 @@ public class Line extends Shape {
 
     public void setStartPoint(Point2D startPoint) {
         this.startPoint = startPoint;
+        calculateDimensions();
     }
 
     public void setEndPoint(Point2D endPoint) {

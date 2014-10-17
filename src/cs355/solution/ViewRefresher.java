@@ -84,9 +84,6 @@ public class ViewRefresher implements IViewRefresher, Observer {
                 // set the drawing transformation
                 g2d.setTransform(objToWorld);
 
-                //if( drawable instanceof DrawableTriangle)
-                //    System.out.println(drawable.getCenter());
-
                 // and finally draw
                 drawable.drawOn(g2d);
 

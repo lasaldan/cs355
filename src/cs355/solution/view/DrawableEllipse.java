@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,23 +66,26 @@ public class DrawableEllipse implements DrawableShape {
 
     @Override
     public List drawScaleHandles(Graphics2D g) {
-        g.setPaint(Color.WHITE);
-        g.draw(new Rectangle2D.Double(-(handleSize / 2) - (width / 2), -(handleSize / 2) - (height / 2), handleSize, handleSize));
-        g.draw(new Rectangle2D.Double(-(handleSize / 2)+(width / 2), -(handleSize / 2)-(height / 2), handleSize, handleSize));
-        g.draw(new Rectangle2D.Double(-(handleSize / 2)-(width / 2), -(handleSize / 2)+(height / 2), handleSize, handleSize));
-        g.draw(new Rectangle2D.Double(-(handleSize / 2)+(width / 2), -(handleSize / 2)+(height / 2), handleSize, handleSize));
-        g.setPaint(Color.GRAY);
-        g.draw(new Rectangle2D.Double(-(width/2), -(height/2), width, height));
 
+        ArrayList<Point2D> corners = new ArrayList();
+        corners.add(new Point2D(-width/2,-height/2)); // TL
+        corners.add(new Point2D( width/2,-height/2)); // TR
+        corners.add(new Point2D( width/2, height/2)); // BR
+        corners.add(new Point2D(-width/2, height/2)); // BL
+
+        g.setPaint(Color.WHITE);
+
+        // Draw Handles at corners
+        for(Point2D corner : corners) {
+            g.draw(new Rectangle2D.Double(-handleSize/2+corner.getX(), -handleSize/2+corner.getY(),handleSize,handleSize));
+        }
+
+        // Outline Shape
+        g.setPaint(Color.GRAY);
+        g.draw(new Rectangle2D.Double(-(width / 2), -(height / 2), width, height));
         g.draw(new Ellipse2D.Double(-(width/2), -(height/2), width, height));
 
-        return null;
+        return corners;
     }
 
-    public boolean isRotationHandleClicked(Point2D hitLoc) {
-
-        double distanceFromCenter = ((hitLoc.y)*(hitLoc.y) + (hitLoc.x)*(hitLoc.x));
-
-        return distanceFromCenter <= (handleSize / 2) * (handleSize / 2);
-    }
 }

@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class DrawableRectangle implements DrawableShape {
     double y;
     double width;
     double height;
+    double handleSize;
 
     double rotation;
 
@@ -34,6 +36,7 @@ public class DrawableRectangle implements DrawableShape {
         color = r.getColor();
 
         rotation = r.getRotation();
+        handleSize = 8;
     }
 
     @Override
@@ -61,14 +64,26 @@ public class DrawableRectangle implements DrawableShape {
     }
     @Override
     public List drawScaleHandles(Graphics2D g) {
-        g.setPaint(Color.WHITE);
-        g.draw(new Rectangle2D.Double(-4-(width / 2), -4-(height / 2), 8, 8));
-        g.draw(new Rectangle2D.Double(-4+(width / 2), -4-(height / 2), 8, 8));
-        g.draw(new Rectangle2D.Double(-4-(width / 2), -4+(height / 2), 8, 8));
-        g.draw(new Rectangle2D.Double(-4+(width / 2), -4+(height / 2), 8, 8));
-        g.setPaint(Color.GRAY);
-        g.draw(new Rectangle2D.Double(-(width/2), -(height/2), width, height));
 
-        return null;
+
+        ArrayList<Point2D> corners = new ArrayList();
+        corners.add(new Point2D(-width/2,-height/2)); // TL
+        corners.add(new Point2D( width/2,-height/2)); // TR
+        corners.add(new Point2D( width/2, height/2)); // BR
+        corners.add(new Point2D(-width/2, height/2)); // BL
+
+        g.setPaint(Color.WHITE);
+
+        // Draw Handles at corners
+        for(Point2D corner : corners) {
+            g.draw(new Rectangle2D.Double(-handleSize/2+corner.getX(), -handleSize/2+corner.getY(),handleSize,handleSize));
+        }
+
+        // Outline Shape
+        g.setPaint(Color.GRAY);
+        g.draw(new Rectangle2D.Double(-(width / 2), -(height / 2), width, height));
+
+        return corners;
+
     }
 }

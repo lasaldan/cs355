@@ -19,11 +19,17 @@ public class Rectangle extends Shape {
 
     @Override
     public boolean containsHitPoint(Point2D hitLoc, double tolerance) {
-        if(abs(hitLoc.x) <= width/2 &&
-            abs(hitLoc.y) <= height/2 )
+        if(abs(hitLoc.x) <= width/2.0 &&
+            abs(hitLoc.y) <= height/2.0 )
             return true;
 
         return false;
+    }
+
+    @Override
+    public void setCorner(Point2D corner) {
+        this.height = abs(corner.getY()*2.0);
+        this.width =  abs(corner.getX()*2.0);
     }
 
     public Rectangle(Point2D _center, double _width, double _height, Color _color) {
@@ -46,8 +52,8 @@ public class Rectangle extends Shape {
         double height = mousePos.y - initial.y;
         double width = mousePos.x - initial.x;
 
-        center.y = initial.y + ( height / 2 );
-        center.x = initial.x + ( width / 2 );
+        center.y = initial.y + ( height / 2.0);
+        center.x = initial.x + ( width / 2.0);
 
         this.height = abs(height);
         this.width = abs(width);

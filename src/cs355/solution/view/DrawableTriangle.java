@@ -9,6 +9,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +28,7 @@ public class DrawableTriangle implements DrawableShape {
     double centerY;
 
     double rotation;
+    double handleSize;
 
     Color color;
 
@@ -47,6 +49,8 @@ public class DrawableTriangle implements DrawableShape {
         color = t.getColor();
 
         rotation = t.getRotation();
+
+        handleSize = 8;
     }
 
     @Override
@@ -88,11 +92,21 @@ public class DrawableTriangle implements DrawableShape {
     }
     @Override
     public List drawScaleHandles(Graphics2D g) {
-        g.setPaint(Color.WHITE);
-        g.draw(new Rectangle2D.Double(-4+x1, -4+y1, 8, 8));
-        g.draw(new Rectangle2D.Double(-4+x2, -4+y2, 8, 8));
-        g.draw(new Rectangle2D.Double(-4+x3, -4+y3, 8, 8));
 
+
+        ArrayList<Point2D> corners = new ArrayList();
+        corners.add(new Point2D(x1,y1));
+        corners.add(new Point2D(x2,y2));
+        corners.add(new Point2D(x3,y3));
+
+        g.setPaint(Color.WHITE);
+
+        // Draw Handles at corners
+        for(Point2D corner : corners) {
+            g.draw(new Rectangle2D.Double(-handleSize/2+corner.getX(), -handleSize/2+corner.getY(), handleSize, handleSize));
+        }
+
+        // Outline Shape
         g.setPaint(Color.GRAY);
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD, 3);
         path.moveTo(x1,y1);
@@ -103,6 +117,7 @@ public class DrawableTriangle implements DrawableShape {
         g.setPaint(color);
         g.draw(path);
 
-        return null;
+        return corners;
+
     }
 }

@@ -10,6 +10,9 @@ import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.List;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.min;
+
 /**
  * Created by Daniel on 9/5/14.
  */
@@ -26,6 +29,9 @@ public class CS355Controller implements ICS355Controller {
 
     List<Point2D> scaleHandles;
     Point2D rotationHandle;
+    Point2D activeHandle;
+    Point2D oppositeCorner;
+    Point2D currentHandle;
 
     public CS355Controller() {
         currentColor = Color.WHITE;
@@ -230,9 +236,33 @@ public class CS355Controller implements ICS355Controller {
             case SELECTING:
                 first = loc;
 
+                if(currentShapeIndex != -1)
+                    temp = (Shape) model.getShape(currentShapeIndex);
+
                 if(currentShapeIndex != -1 &&
-                   isNear(worldToObject(loc,model.getShape(currentShapeIndex)), rotationHandle, tolerance)) {
+                   isNear(worldToObject(loc,temp), rotationHandle, tolerance)) {
                     currentState = CS355State.ROTATING;
+                    break;
+                }
+
+                if(currentShapeIndex != -1) {
+                    for (Point2D handle : scaleHandles) {
+                        if (isNear(worldToObject(loc, temp), handle, tolerance)) {
+                            //System.out.println("Setting Current Handle");
+                            currentHandle = handle;
+                            oppositeCorner = objectToWorld(new Point2D (scaleHandles.get( (scaleHandles.indexOf(handle) +2) % 4)), temp);
+                            break;
+                        }
+                    }
+                }
+
+                if(currentShapeIndex != -1 && currentHandle != null) {
+                    currentState = CS355State.SCALING;
+                    first = new Point2D(loc);
+                    second = model.getShape(currentShapeIndex).getCenter();
+                    temp = (Shape) model.getShape(currentShapeIndex);
+                    //System.out.println("Setting Active");
+                    activeHandle = new Point2D(currentHandle);
                     break;
                 }
 
@@ -299,7 +329,7 @@ public class CS355Controller implements ICS355Controller {
                 double ydiff = loc.getY() - first.getY();
 
                 if(currentShapeIndex != -1) {
-                    IShape temp = model.getShape(currentShapeIndex);
+                    temp = (Shape) model.getShape(currentShapeIndex);
                     double x = second.getX() + xdiff;
                     double y = second.getY() + ydiff;
 
@@ -310,7 +340,7 @@ public class CS355Controller implements ICS355Controller {
                 break;
             case ROTATING:
 
-                IShape temp = model.getShape(currentShapeIndex);
+                temp = (Shape) model.getShape(currentShapeIndex);
 
                 double diffX = temp.getCenter().getX() - loc.getX();
                 double diffY = temp.getCenter().getY() - loc.getY();
@@ -318,6 +348,219 @@ public class CS355Controller implements ICS355Controller {
                 temp.setRotation(Math.atan2(-diffX, diffY));
 
                 model.setShape(currentShapeIndex, temp);
+
+                break;
+            case SCALING:
+
+                IShape currentShape = model.getShape(currentShapeIndex);
+
+                double diffx = loc.getX() - first.getX();
+                double diffy = loc.getY() - first.getY();
+
+                Point2D newCenter;
+                Point2D currentInLocal = worldToObject(loc, currentShape);
+
+                if(currentShape instanceof Line) {
+                    System.out.println(scaleHandles.indexOf(activeHandle));
+                    if(scaleHandles.indexOf(activeHandle) == 0)
+                        ((Line) currentShape).setStartPoint(loc);
+                    if(scaleHandles.indexOf(activeHandle) == 1)
+                        ((Line) currentShape).setEndPoint(loc);
+                }
+
+                else if(currentShape instanceof Square || currentShape instanceof Circle) {
+
+                    if(currentShape instanceof Square) {
+                        Point2D mousePosInLocal = worldToObject(loc, currentShape);
+                        Point2D localFixedCorner = worldToObject(oppositeCorner, currentShape);
+
+                        newCenter = ((Square)currentShape).getCenterFromCorner(mousePosInLocal, localFixedCorner);
+                        currentShape.setCenter(objectToWorld(newCenter,currentShape));
+                    }
+                    else if(currentShape instanceof Circle) {
+                        Point2D mousePosInLocal = worldToObject(loc, currentShape);
+                        Point2D localFixedCorner = worldToObject(oppositeCorner, currentShape);
+
+                        newCenter = ((Circle)currentShape).getCenterFromCorner(mousePosInLocal, localFixedCorner);
+                        currentShape.setCenter(objectToWorld(newCenter,currentShape));
+                    }
+                    /*
+                    Point2D oppositeWorldCoords = objectToWorld(oppositeCorner,currentShape);
+                    Point2D originalHandleLocation = first;
+                    Point2D originalShapeCenter = second;
+                    Point2D currentMousePosition = loc;
+
+                    diffx = currentMousePosition.x - originalHandleLocation.x;
+                    diffy = currentMousePosition.y - originalHandleLocation.y;
+                    System.out.println("Mouse Moved: " + diffx + "," + diffy);
+
+                    double centerAdjustX = diffx / 2.0;
+                    double centerAdjustY = diffy / 2.0;
+
+                    newCenter = new Point2D( originalShapeCenter.x + centerAdjustX, originalShapeCenter.y + centerAdjustY);
+
+                    double newSizeX = newCenter.x - oppositeWorldCoords.x;
+                    double newSizeY = newCenter.y - oppositeWorldCoords.y;
+
+                    System.out.println("New Size: " + newSizeX + "," + newSizeY);
+
+                    int signX = (newSizeX < 0)? -1 : 1;
+                    int signY = (newSizeY < 0)? -1 : 1;
+
+                    newCenter.x = originalShapeCenter.x + (min(newSizeX, newSizeY)*signX);
+                    newCenter.y = originalShapeCenter.y + (min(newSizeX, newSizeY)*signY);
+
+                    System.out.println("Moving Center to: " + newCenter);
+
+                    currentShape.setCenter(newCenter);
+
+                    System.out.println();
+
+*/
+
+
+                    //System.out.println((second.x - diffx) + " " + (second.y - diffy));
+
+ /*
+                    if(currentInLocal.x > 0 && currentInLocal.y > 0)
+                        System.out.println("BR");
+                    else if(currentInLocal.x >= 0)
+                        System.out.println("UR");
+                    else if(currentInLocal.y >= 0)
+                        System.out.println("BL");
+                    else
+                        System.out.println("UL");
+                        */
+                    /*
+                    System.out.println(scaleHandles.size() + " " + scaleHandles.indexOf(currentHandle));
+                    System.out.println(currentHandle);
+
+                    //System.out.println(currentInLocal);
+                    double size = min(abs(diffx), abs(diffy));
+
+                    if (currentInLocal.getX() >= 0 && currentInLocal.getY() >= 0){
+                        //System.out.println("LowerRight");
+                        diffx = size;
+                        diffy = size;
+                    }
+                    else if (currentInLocal.getX() > 0 && currentInLocal.getY() < 0) {
+                        //System.out.println("UpperRight");
+                        diffx = size;
+                        diffy = -size;
+                    }
+                    else if (currentInLocal.getX() < 0 && currentInLocal.getY() > 0){
+                        //System.out.println("LowerLeft");
+                        diffx = -size;
+                        diffy = size;
+                    }
+                    else {
+                        //System.out.println("UpperLeft");
+                        diffx = -size;
+                        diffy = -size;
+                    }
+
+                    newCenter = new Point2D(second.x + diffx / 2.0, second.y + diffy / 2.0);
+                    /*
+                    double diffxSize = min(abs(diffx),abs(diffy)) * (diffx/abs(diffx));
+                    double diffySize = min(abs(diffx),abs(diffy)) * (diffy/abs(diffy));
+
+                    * //System.out.println(diffx + " " + diffy + " " + diffxSize + " " + diffySize);
+                    newCenter = new Point2D(second.x + diffxSize / 2.0, second.y + diffySize / 2.0);
+
+
+                    currentShape = new Square();
+                    currentShape.setCenter(oppositeCorner);
+                    currentShape.setCorner(loc);
+                    */
+
+/*
+                    Point2D current = worldToObject(loc,currentShape);
+                    System.out.println(current);
+                    */
+                    //currentShape.setCenter(newCenter);
+
+                    //Point2D corner = new Point2D(current.x + newCenter.x, current.y + newCenter.y);
+
+                    //currentShape.setCorner(corner);
+
+                    /*
+
+                    newCenter = new Point2D(second.x + diffx / 2.0, second.y + diffy / 2.0);
+                    Point2D centerInLocal = worldToObject(newCenter,currentShape);
+                    Point2D mousePosition = worldToObject(loc,currentShape);
+
+                    if(centerInLocal)
+                    */
+
+                    /*
+                    System.out.println("Original Corner Loc: " + currentHandle);
+                    diffx = -first.x + worldToObject(loc,temp).x;
+                    diffy = -first.y + worldToObject(loc,temp).y;
+
+                    diffx = worldToObject(loc,temp).x - worldToObject(first,temp).x;
+                    diffy = worldToObject(loc,temp).y - worldToObject(first,temp).y;
+
+                    System.out.println("Local Drag Offset:" + diffx + ","+diffy);
+
+                    double diffxCenter = min(abs(diffx), abs(diffy));
+                    double diffyCenter = min(abs(diffx), abs(diffy));
+
+                    int signx = (diffx < 0)? -1 : 1;
+                    int signy = (diffy < 0)? -1 : 1;
+
+                    diffxCenter *= signx;
+                    diffyCenter *= signy;
+
+                    newCenter = new Point2D(second.x + diffxCenter/2.0, second.y+diffyCenter/2.0);
+
+                    double shortestSide = min(first.x + diffx, first.y + diffy);
+                    System.out.println(shortestSide);
+
+                    currentShape.setCenter(newCenter);
+*/
+/*
+                    double sizeDiffx = min(abs(diffx),abs(diffy)) * (diffx/abs(diffx));
+                    double sizeDiffy = min(abs(diffx),abs(diffy)) * (diffy/abs(diffy));
+                    System.out.println("Size Difference: "+sizeDiffx + "," + sizeDiffy);
+
+                    double size = abs(currentHandle.getX())*2;
+                    System.out.println("Size of Square: " + size);
+                    double newcornerx = size + diffx;
+                    double newcornery = size + diffy;
+
+                    double shortestSide = min(abs(newcornerx), abs(newcornery));
+
+                    newCenter = new Point2D(second.x + sizeDiffx/2.0, second.y + sizeDiffy/2.0);
+                    currentShape.setCenter(newCenter);
+                    //currentShape.setCorner(new Point2D(shortestSide/2.0, shortestSide/2.0));
+/*
+                    System.out.println("Shortest side of new Square: " + shortestSide);
+
+                    double centerOffsetX = (shortestSide - currentHandle.x) / 2.0;
+                    double centerOffsetY = (shortestSide - currentHandle.y) / 2.0;
+
+                    double xsize = shortestSide * (newcornerx/abs(newcornerx));
+                    double ysize = shortestSide * (newcornery/abs(newcornery));
+
+                    newCenter = new Point2D(second.x+centerOffsetX, second.y+centerOffsetY);
+                    //System.out.println(xsize);
+                    //System.out.println(ysize);
+                    System.out.println(newCenter);
+*/
+
+
+
+                }
+                else {
+                    newCenter = new Point2D(second.x + diffx / 2.0, second.y + diffy / 2.0);
+
+                    currentShape.setCenter(newCenter);
+
+                    Point2D current = worldToObject(loc,currentShape);
+                    currentShape.setCorner(current);
+                }
+
+                model.setShape(currentShapeIndex, currentShape);
 
                 break;
 
@@ -363,8 +606,10 @@ public class CS355Controller implements ICS355Controller {
                 currentState = CS355State.SELECTING;
                 break;
 
+            case SCALING:
             case ROTATING:
                 currentState = CS355State.SELECTING;
+                currentShapeIndex = -1;
                 break;
 
         }
@@ -397,6 +642,23 @@ public class CS355Controller implements ICS355Controller {
         worldToObj.transform(loc, localCoordinates);
 
         return localCoordinates;
+    }
+
+    public Point2D objectToWorld(Point2D loc, IShape shape) {
+        Point2D worldCoordinates = new Point2D();
+
+        AffineTransform objToWorld = new AffineTransform();
+
+        // translate to its position in the world (last transformation)
+        objToWorld.translate(shape.getCenter().x, shape.getCenter().y);
+
+        // rotate to its orientation (first transformation)
+        objToWorld.rotate(shape.getRotation());
+
+        // set the drawing transformation
+        objToWorld.transform(loc, worldCoordinates);
+
+        return worldCoordinates;
     }
 
     public int getShapeIndexAt( Point2D loc, double tolerance ) {

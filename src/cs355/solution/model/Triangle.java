@@ -32,6 +32,11 @@ public class Triangle extends Shape {
         return false;
     }
 
+    @Override
+    public void setCorner(Point2D corner) {
+
+    }
+
     public Triangle(Point2D pt1, Point2D pt2, Point2D pt3, Color _color) {
         this.pt1 = pt1;
         this.pt2 = pt2;

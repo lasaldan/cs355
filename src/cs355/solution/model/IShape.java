@@ -20,4 +20,7 @@ public interface IShape {
     public double getRotation();
 
     public boolean containsHitPoint(Point2D hitLoc, double tolerance);
+
+    public void setCorner(Point2D corner);
+
 }
