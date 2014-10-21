@@ -91,7 +91,6 @@ public class ViewRefresher implements IViewRefresher, Observer {
                     tempShape = drawable;
                     tempTransform = objToWorld;
                 }
-
             }
         });
 
@@ -100,6 +99,7 @@ public class ViewRefresher implements IViewRefresher, Observer {
             g2d.setTransform(tempTransform);
             controller.setRotationHandle( tempShape.drawRotationHandle(g2d) );
             controller.setScaleHandles( tempShape.drawScaleHandles(g2d));
+            //tempShape = null;
         }
     }
 

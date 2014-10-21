@@ -1,7 +1,5 @@
 package cs355.solution.model;
 
-import java.awt.*;
-
 /**
  * Created by Daniel on 9/6/14.
  */
@@ -52,5 +50,29 @@ public class Point2D extends java.awt.geom.Point2D {
     public String toString()
     {
         return "X: "+x+", Y: "+y;
+    }
+    public boolean equals(Object other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+
+        if (this.getClass() != other.getClass())
+        {
+            return false;
+        }
+
+        if (this.x != ((Point2D)other).x)
+        {
+            return false;
+        }
+
+        if (this.y != ((Point2D)other).y)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
