@@ -25,6 +25,7 @@ public class CS355Controller implements ICS355Controller {
     ModelFacade model;
     Point2D first;
     Point2D second;
+    Point2D third;
     double tolerance;
 
     List<Point2D> scaleHandles;
@@ -255,11 +256,19 @@ public class CS355Controller implements ICS355Controller {
 
                             if(temp instanceof Line) {
 
-                                if(scaleHandles.indexOf(currentHandle) == 0)
-                                    end = "end";
-
-                                else if(scaleHandles.indexOf(currentHandle) == 1)
+                                if(scaleHandles.indexOf(currentHandle) == 0) {
+                                    System.out.println("Clicked Start Handle");
                                     end = "start";
+                                    second = objectToWorld(((Line)temp).getEndPoint(),temp);
+                                    System.out.println("Saving End Handle Location: " + second);
+                                }
+
+                                else if(scaleHandles.indexOf(currentHandle) == 1) {
+                                    System.out.println("Clicked End Handle");
+                                    end = "end";
+                                    second = objectToWorld(((Line) temp).getStartPoint(), temp);
+                                    System.out.println("Saving Start Handle Location: " + second);
+                                }
                             }
 
                             if(temp instanceof Triangle) {
@@ -284,6 +293,10 @@ public class CS355Controller implements ICS355Controller {
                     currentState = CS355State.SCALING;
                     first = new Point2D(loc);
                     second = model.getShape(currentShapeIndex).getCenter();
+                    if(end.equals("end"))
+                        third = ((Line)temp).getEndPoint();
+                    if(end.equals("start"))
+                        third = ((Line)temp).getStartPoint();
                     temp = (Shape) model.getShape(currentShapeIndex);
                     //System.out.println("Setting Active");
                     activeHandle = new Point2D(currentHandle);
@@ -291,7 +304,6 @@ public class CS355Controller implements ICS355Controller {
                 }
 
                 currentShapeIndex = getShapeIndexAt(loc, tolerance);
-                System.out.println(currentShapeIndex);
                 if(currentShapeIndex != -1) {
                     GUIFunctions.changeSelectedColor(model.getShape(currentShapeIndex).getColor());
                     second = model.getShape(currentShapeIndex).getCenter();
@@ -379,11 +391,16 @@ public class CS355Controller implements ICS355Controller {
 
                 if(currentShape instanceof Line) {
 
-                    if(end.equals("end"))
-                        ((Line) currentShape).setEndPoint(loc);
-
-                    if(end.equals("start"))
+                    Color color = currentShape.getColor();
+                    if(end.equals("end")) {
+                        currentShape = new Line(third,third,color);
                         ((Line) currentShape).setStartPoint(loc);
+                    }
+
+                    if(end.equals("start")) {
+                        currentShape = new Line(third, third, color);
+                        ((Line) currentShape).setEndPoint(loc);
+                    }
                 }
 
                 else if (currentShape instanceof Triangle) {
@@ -480,13 +497,11 @@ public class CS355Controller implements ICS355Controller {
                 break;
 
             case DRAGGING_SELECTION:
-                currentState = CS355State.SELECTING;
-                break;
-
             case SCALING:
             case ROTATING:
                 currentState = CS355State.SELECTING;
-                //currentShapeIndex = -1;
+                currentHandle = null;
+                third = null;
                 end = "";
                 break;
 

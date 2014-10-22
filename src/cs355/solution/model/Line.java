@@ -40,7 +40,6 @@ public class Line extends Shape {
         endPoint = new Point2D(_end);
         color = _color;
         calculateDimensions();
-
     }
 
     private void calculateDimensions() {
