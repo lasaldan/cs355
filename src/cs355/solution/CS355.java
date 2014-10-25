@@ -39,11 +39,17 @@ public class CS355
         MouseListener mouseListener = new CS355MouseListener(controller);
         MouseMotionListener mouseMotionListener = new CS355MouseMotionListener(controller);
 
+        controller.setScrollController( new CS355ScrollController() );
+        controller.setZoomController( new CS355ZoomController() );
+
         // Fill in the parameters below with your controller, view,
         //   mouse listener, and mouse motion listener
         GUIFunctions.createCS355Frame(controller,viewRefresher,mouseListener,mouseMotionListener);
 
         controller.colorButtonHit(defaultColor);
+        controller.lineButtonHit();
+        controller.initView();
+
         GUIFunctions.refresh();        
     }
 }

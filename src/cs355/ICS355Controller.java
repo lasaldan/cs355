@@ -4,6 +4,8 @@
  */
 package cs355;
 
+import cs355.solution.CS355ScrollController;
+import cs355.solution.CS355ZoomController;
 import cs355.solution.model.ModelFacade;
 import cs355.solution.model.Point2D;
 import cs355.solution.model.Shape;
@@ -67,6 +69,10 @@ public interface ICS355Controller
     public void handleMouseDrag(Point2D point2D);
 
     public void setModel(ModelFacade model);
+
+    public void setScrollController(CS355ScrollController scroller);
+
+    public void setZoomController(CS355ZoomController zoomer);
 
     public Shape getTempShape();
 }

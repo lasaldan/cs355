@@ -68,11 +68,11 @@ public class Line extends Shape {
     }
 
     public Point2D getStartPoint() {
-        return startPoint;
+        return new Point2D(length/2.0,0);
     }
 
     public Point2D getEndPoint() {
-        return endPoint;
+        return new Point2D(-length/2.0,0);
     }
 
     public void setStartPoint(Point2D startPoint) {

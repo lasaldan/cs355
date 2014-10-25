@@ -18,6 +18,11 @@ import static java.lang.Math.min;
  */
 public class CS355Controller implements ICS355Controller {
 
+    CS355ZoomController zoomData;
+    CS355ScrollController scrollData;
+
+    Point2D viewCenter;
+
     Color currentColor;
     CS355State currentState;
     int currentShapeIndex;
@@ -40,6 +45,7 @@ public class CS355Controller implements ICS355Controller {
         currentShapeIndex = -1;
         tolerance = 4;
         end = "";
+        viewCenter = new Point2D(256,256);
     }
 
     public void setScaleHandles(List<Point2D> scaleHandles) {
@@ -50,6 +56,11 @@ public class CS355Controller implements ICS355Controller {
         //System.out.println(rotationHandle);
         this.rotationHandle = rotationHandle;
     }
+
+    public void initView() {
+        adjustScrollBars();
+    }
+
 
     @Override
     public void colorButtonHit(Color c) {
@@ -112,22 +123,29 @@ public class CS355Controller implements ICS355Controller {
 
     @Override
     public void zoomInButtonHit() {
-
+        zoomData.zoomIn();
+        adjustScrollBars();
     }
 
     @Override
     public void zoomOutButtonHit() {
+        zoomData.zoomOut();
+        adjustScrollBars();
 
+    }
+
+    private void adjustScrollBars() {
+        scrollData.centerAt(viewCenter, zoomData.getZoomLevel());
     }
 
     @Override
     public void hScrollbarChanged(int value) {
-
+        viewCenter.x = value + scrollData.getCurrentKnobSize() / 2.0;
     }
 
     @Override
     public void vScrollbarChanged(int value) {
-
+        viewCenter.y = value + scrollData.getCurrentKnobSize() / 2.0;
     }
 
     @Override
@@ -257,17 +275,17 @@ public class CS355Controller implements ICS355Controller {
                             if(temp instanceof Line) {
 
                                 if(scaleHandles.indexOf(currentHandle) == 0) {
-                                    System.out.println("Clicked Start Handle");
+                                    //System.out.println("Clicked Start Handle");
                                     end = "start";
-                                    second = objectToWorld(((Line)temp).getEndPoint(),temp);
-                                    System.out.println("Saving End Handle Location: " + second);
+                                    //second = objectToWorld(((Line)temp).getEndPoint(),temp);
+                                    //System.out.println("Saving End Handle Location: " + second);
                                 }
 
                                 else if(scaleHandles.indexOf(currentHandle) == 1) {
-                                    System.out.println("Clicked End Handle");
+                                    //System.out.println("Clicked End Handle");
                                     end = "end";
-                                    second = objectToWorld(((Line) temp).getStartPoint(), temp);
-                                    System.out.println("Saving Start Handle Location: " + second);
+                                    //second = objectToWorld(((Line) temp).getStartPoint(), temp);
+                                    //System.out.println("Saving Start Handle Location: " + second);
                                 }
                             }
 
@@ -283,7 +301,8 @@ public class CS355Controller implements ICS355Controller {
 
 
                             if(temp instanceof Square || temp instanceof Circle)
-                                oppositeCorner = objectToWorld(new Point2D (scaleHandles.get( (scaleHandles.indexOf(handle) +2) % 4)), temp);
+                                oppositeCorner = objectToWorld(
+                                    new Point2D (scaleHandles.get( (scaleHandles.indexOf(handle) +2) % 4)), temp);
                             break;
                         }
                     }
@@ -291,13 +310,13 @@ public class CS355Controller implements ICS355Controller {
 
                 if(currentShapeIndex != -1 && currentHandle != null) {
                     currentState = CS355State.SCALING;
+                    temp = (Shape) model.getShape(currentShapeIndex);
                     first = new Point2D(loc);
                     second = model.getShape(currentShapeIndex).getCenter();
                     if(end.equals("end"))
-                        third = ((Line)temp).getEndPoint();
+                        third = objectToWorld(((Line)temp).getEndPoint(),temp);
                     if(end.equals("start"))
-                        third = ((Line)temp).getStartPoint();
-                    temp = (Shape) model.getShape(currentShapeIndex);
+                        third = objectToWorld(((Line)temp).getStartPoint(),temp);
                     //System.out.println("Setting Active");
                     activeHandle = new Point2D(currentHandle);
                     break;
@@ -511,6 +530,16 @@ public class CS355Controller implements ICS355Controller {
     @Override
     public void setModel( ModelFacade _model ) {
         this.model = _model;
+    }
+
+    @Override
+    public void setScrollController(CS355ScrollController scroller) {
+        this.scrollData = scroller;
+    }
+
+    @Override
+    public void setZoomController(CS355ZoomController zoomer) {
+        this.zoomData = zoomer;
     }
 
     @Override
