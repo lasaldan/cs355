@@ -16,15 +16,15 @@ public class CS355ZoomController {
     }
 
     public double zoomIn() {
-        if(zoomLevel < maxZoom)
-            zoomLevel *= 2;
+        if(zoomLevel > minZoom)
+            zoomLevel *= .5;
 
         return zoomLevel;
     }
 
     public double zoomOut() {
-        if(zoomLevel > minZoom)
-            zoomLevel *= .5;
+        if(zoomLevel < maxZoom)
+            zoomLevel *= 2;
 
         return zoomLevel;
     }

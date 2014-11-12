@@ -3,6 +3,8 @@ package cs355.solution;
 import cs355.GUIFunctions;
 import cs355.solution.model.Point2D;
 
+import java.awt.geom.AffineTransform;
+
 /**
  * Created by Daniel on 10/24/14. ;)
  */
@@ -60,6 +62,7 @@ public class CS355ScrollController {
         GUIFunctions.setVScrollBarKnob(currentKnobSize);
 
     }
+
 
     private void setHScrollBar(double hTarget) {
 

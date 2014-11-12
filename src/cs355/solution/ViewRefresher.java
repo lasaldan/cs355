@@ -71,15 +71,54 @@ public class ViewRefresher implements IViewRefresher, Observer {
                 // create a new transformation (defaults to identity)
                 AffineTransform objToWorld = new AffineTransform();
 
+                // Set variables for Translation Transformation
+                double translation_m00 = 1.0;
+                double translation_m10 = 0.0;
+                double translation_m01 = 0.0;
+                double translation_m11 = 1.0;
+                double translation_m02 = drawable.getCenter().x;
+                double translation_m12 = drawable.getCenter().y;
+
+                // Set variables for Rotation Transformation
+                double rotation_m00 = Math.cos(drawable.getRotation());
+                double rotation_m10 = Math.sin(drawable.getRotation());
+                double rotation_m01 = -Math.sin(drawable.getRotation());
+                double rotation_m11 = Math.cos(drawable.getRotation());
+                double rotation_m02 = 0.0;
+                double rotation_m12 = 0.0;
+
+
+                AffineTransform translation = new AffineTransform(translation_m00,
+                                                                  translation_m10,
+                                                                  translation_m01,
+                                                                  translation_m11,
+                                                                  translation_m02,
+                                                                  translation_m12);
+
+                AffineTransform rotation = new AffineTransform(rotation_m00,
+                                                               rotation_m10,
+                                                               rotation_m01,
+                                                               rotation_m11,
+                                                               rotation_m02,
+                                                               rotation_m12);
+
+
+
                 // reset Transform to identity
                 g2d.setTransform(objToWorld);
 
+                objToWorld.concatenate(translation);
+                objToWorld.concatenate(rotation);
+                objToWorld.concatenate(controller.getScaleTransformation());
+                objToWorld.concatenate(controller.getTranslationTransformation());
+
 
                 // translate to its position in the world (last transformation)
-                objToWorld.translate(drawable.getCenter().x, drawable.getCenter().y);
+                //objToWorld.translate(drawable.getCenter().x, drawable.getCenter().y);
+                //objToWorld.concatenate(controller.getTranslationTransformation());
 
                 // rotate to its orientation (first transformation)
-                objToWorld.rotate(drawable.getRotation());
+                //objToWorld.rotate(drawable.getRotation());
 
                 // set the drawing transformation
                 g2d.setTransform(objToWorld);

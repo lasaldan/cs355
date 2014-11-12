@@ -141,11 +141,13 @@ public class CS355Controller implements ICS355Controller {
     @Override
     public void hScrollbarChanged(int value) {
         viewCenter.x = value + scrollData.getCurrentKnobSize() / 2.0;
+        GUIFunctions.refresh();
     }
 
     @Override
     public void vScrollbarChanged(int value) {
         viewCenter.y = value + scrollData.getCurrentKnobSize() / 2.0;
+        GUIFunctions.refresh();
     }
 
     @Override
@@ -542,6 +544,13 @@ public class CS355Controller implements ICS355Controller {
         this.zoomData = zoomer;
     }
 
+    public AffineTransform getTranslationTransformation() {
+        return new AffineTransform(1.0d, 0, 0, 1.0d, -viewCenter.x, -viewCenter.y);
+    }
+
+    public AffineTransform getScaleTransformation() {
+        return new AffineTransform(1/zoomData.getZoomLevel(), 0, 0, 1/zoomData.getZoomLevel(), 0, 0);
+    }
     @Override
     public Shape getTempShape() {
         return temp;
