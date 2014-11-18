@@ -1,6 +1,5 @@
 package cs355.solution;
 
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import cs355.GUIFunctions;
 import cs355.ICS355Controller;
 import cs355.IViewRefresher;
@@ -107,10 +106,13 @@ public class ViewRefresher implements IViewRefresher, Observer {
                 // reset Transform to identity
                 g2d.setTransform(objToWorld);
 
-                objToWorld.concatenate(translation);
+				// Object to World
                 objToWorld.concatenate(rotation);
-                objToWorld.concatenate(controller.getScaleTransformation());
-                objToWorld.concatenate(controller.getTranslationTransformation());
+				objToWorld.concatenate(translation);
+
+				// World to View
+				objToWorld.concatenate(controller.getTranslationTransformation());
+				objToWorld.concatenate(controller.getScaleTransformation());
 
 
                 // translate to its position in the world (last transformation)

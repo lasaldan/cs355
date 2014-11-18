@@ -1,7 +1,5 @@
 package cs355.solution.model;
 
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
-
 import java.awt.Color;
 
 /**
