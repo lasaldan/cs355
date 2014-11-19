@@ -69,6 +69,7 @@ public class ViewRefresher implements IViewRefresher, Observer {
             if( drawable != null) {
                 // create a new transformation (defaults to identity)
                 AffineTransform objToWorld = new AffineTransform();
+				//objToWorld.setToIdentity();
 
                 // Set variables for Translation Transformation
                 double translation_m00 = 1.0;
@@ -104,16 +105,17 @@ public class ViewRefresher implements IViewRefresher, Observer {
 
 
                 // reset Transform to identity
-                g2d.setTransform(objToWorld);
+                //g2d.setTransform(objToWorld);
 
-				// Object to World
-                objToWorld.concatenate(rotation);
-				objToWorld.concatenate(translation);
+
 
 				// World to View
-				objToWorld.concatenate(controller.getTranslationTransformation());
 				objToWorld.concatenate(controller.getScaleTransformation());
+				objToWorld.concatenate(controller.getTranslationTransformation());
 
+				// Object to World
+				objToWorld.concatenate(translation);
+				objToWorld.concatenate(rotation);
 
                 // translate to its position in the world (last transformation)
                 //objToWorld.translate(drawable.getCenter().x, drawable.getCenter().y);

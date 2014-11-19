@@ -30,6 +30,7 @@ public class CS355ZoomController {
     }
 
     public double getZoomLevel() {
-        return zoomLevel;
+		//System.out.println(zoomLevel);
+		return zoomLevel;
     }
 }
