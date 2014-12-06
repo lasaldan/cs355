@@ -12,6 +12,7 @@ public class ModelFacade extends Observable {
 
     Shapes shapes = new Shapes();
     Semaphore modelLock = new Semaphore(1);
+    Image background;
 
     public List getShapes() {
         return shapes.getShapes();
@@ -25,6 +26,16 @@ public class ModelFacade extends Observable {
         setChanged();
         notifyObservers();
         shapes.set(index, (Shape) shape);
+    }
+
+    public void loadImage(int[][] data) {
+        background = new Image(data);
+        setChanged();
+        notifyObservers();
+    }
+
+    public Image getImage() {
+        return background;
     }
 
     public int addShape(Shape s) {

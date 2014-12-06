@@ -7,6 +7,7 @@ import cs355.solution.model.*;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class CS355Controller implements ICS355Controller {
 
     CS355ZoomController zoomData;
     CS355ScrollController scrollData;
+    CS355Image image;
+    CS355Image imageBuffer;
 
     Point2D viewCenter;
 
@@ -40,12 +43,15 @@ public class CS355Controller implements ICS355Controller {
     Point2D currentHandle;
     String end;
 
+    protected boolean hasBackground;
+
     public CS355Controller() {
         currentColor = Color.WHITE;
         currentShapeIndex = -1;
         tolerance = 4;
         end = "";
         viewCenter = new Point2D(256,256);
+        hasBackground = false;
     }
 
     public void setScaleHandles(List<Point2D> scaleHandles) {
@@ -172,27 +178,44 @@ public class CS355Controller implements ICS355Controller {
 
     @Override
     public void doMedianBlur() {
-
+        ImageTools.median(model.getImage());
+        GUIFunctions.refresh();
     }
 
     @Override
     public void doUniformBlur() {
-
+        ImageTools.blur(model.getImage());
+        GUIFunctions.refresh();
     }
 
     @Override
     public void doChangeContrast(int contrastAmountNum) {
-
+        ImageTools.contrast(model.getImage(),contrastAmountNum);
+        GUIFunctions.refresh();
     }
 
     @Override
     public void doChangeBrightness(int brightnessAmountNum) {
-
+        ImageTools.brighten(model.getImage(),brightnessAmountNum);
+        GUIFunctions.refresh();
     }
 
     @Override
     public void doLoadImage(BufferedImage openImage) {
+        hasBackground = true;
 
+        int height = openImage.getHeight();
+        int width = openImage.getWidth();
+
+        int[][] imgData = new int[height][width];
+
+        for(int row = 0; row < height; row++) {
+            for(int col = 0; col < width; col++) {
+                imgData[row][col] = openImage.getRGB(col,row)>>16&255;
+            }
+        }
+
+        model.loadImage( imgData );
     }
 
     @Override

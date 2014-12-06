@@ -4,11 +4,14 @@ import cs355.GUIFunctions;
 import cs355.ICS355Controller;
 import cs355.IViewRefresher;
 import cs355.solution.model.*;
+import cs355.solution.model.Image;
 import cs355.solution.model.Rectangle;
 import cs355.solution.view.*;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -35,10 +38,30 @@ public class ViewRefresher implements IViewRefresher, Observer {
         tempTransform = null;
     }
 
+    private void drawBackground(Image image, Graphics2D g2d) {
+
+        BufferedImage img = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+
+        WritableRaster raster = img.getRaster();
+
+
+        for(int row = 0; row < image.getHeight(); row++) {
+            for (int col = 0; col < image.getWidth(); col++) {
+                int color = image.getPixel(row,col);
+                raster.setPixel(col, row, new double[]{color, color, color, 1});
+            }
+        }
+
+        g2d.drawImage(img, null, null);
+    }
+
     @Override
     public void refreshView(Graphics2D g2d_fresh) {
         Graphics2D g2d = (Graphics2D)g2d_fresh.create();
         List shapeList = new ArrayList( model.getShapes() );
+
+        if(controller.hasBackground)
+            drawBackground(model.getImage(), g2d);
 
         shapeList.add(controller.getTempShape());
 
