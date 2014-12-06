@@ -87,7 +87,6 @@ public class ViewRefresher implements IViewRefresher, Observer {
                 double rotation_m02 = 0.0;
                 double rotation_m12 = 0.0;
 
-
                 AffineTransform translation = new AffineTransform(translation_m00,
                                                                   translation_m10,
                                                                   translation_m01,

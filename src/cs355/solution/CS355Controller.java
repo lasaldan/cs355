@@ -545,7 +545,10 @@ public class CS355Controller implements ICS355Controller {
     }
 
     public AffineTransform getTranslationTransformation() {
-        return new AffineTransform(1.0d, 0, 0, 1.0d, -viewCenter.x, -viewCenter.y);
+        //return new AffineTransform(1.0d, 0, 0, 1.0d, -viewCenter.x, -viewCenter.y);
+
+        double zoomLevel = zoomData.getZoomLevel();
+        return new AffineTransform(1.0d, 0, 0, 1.0d, -viewCenter.x + 256*(1/zoomLevel), -viewCenter.y + 256*(1/zoomLevel));
     }
 
     public AffineTransform getScaleTransformation() {
@@ -557,6 +560,14 @@ public class CS355Controller implements ICS355Controller {
     }
 
     public Point2D worldToObject(Point2D loc, IShape shape) {
+
+
+
+
+        AffineTransform rotation = new AffineTransform(Math.cos(shape.getRotation()), Math.sin(shape.getRotation()), -Math.sin(shape.getRotation()), Math.cos(shape.getRotation()), 0, 0);
+        AffineTransform translation = new AffineTransform(1,0,0,1,shape.getCenter().x, shape.getCenter().y);
+
+
 
         Point2D localCoordinates = new Point2D();
 
