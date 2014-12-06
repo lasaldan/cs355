@@ -7,7 +7,6 @@ import cs355.solution.model.*;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,8 +20,6 @@ public class CS355Controller implements ICS355Controller {
 
     CS355ZoomController zoomData;
     CS355ScrollController scrollData;
-    CS355Image image;
-    CS355Image imageBuffer;
 
     Point2D viewCenter;
 
@@ -43,7 +40,7 @@ public class CS355Controller implements ICS355Controller {
     Point2D currentHandle;
     String end;
 
-    protected boolean hasBackground;
+    protected boolean hasBackground, showBackground;
 
     public CS355Controller() {
         currentColor = Color.WHITE;
@@ -52,6 +49,7 @@ public class CS355Controller implements ICS355Controller {
         end = "";
         viewCenter = new Point2D(256,256);
         hasBackground = false;
+        showBackground = false;
     }
 
     public void setScaleHandles(List<Point2D> scaleHandles) {
@@ -168,41 +166,36 @@ public class CS355Controller implements ICS355Controller {
 
     @Override
     public void doEdgeDetection() {
-
+        model.detectEdges();
     }
 
     @Override
     public void doSharpen() {
-
+        model.sharpen();
     }
 
     @Override
     public void doMedianBlur() {
-        ImageTools.median(model.getImage());
-        GUIFunctions.refresh();
+        model.medianBlur();
     }
 
     @Override
     public void doUniformBlur() {
-        ImageTools.blur(model.getImage());
-        GUIFunctions.refresh();
+        model.uniformBlur();
     }
 
     @Override
     public void doChangeContrast(int contrastAmountNum) {
-        ImageTools.contrast(model.getImage(),contrastAmountNum);
-        GUIFunctions.refresh();
+        model.adjustContrast( contrastAmountNum );
     }
 
     @Override
     public void doChangeBrightness(int brightnessAmountNum) {
-        ImageTools.brighten(model.getImage(),brightnessAmountNum);
-        GUIFunctions.refresh();
+        model.adjustBrightness( brightnessAmountNum );
     }
 
     @Override
     public void doLoadImage(BufferedImage openImage) {
-        hasBackground = true;
 
         int height = openImage.getHeight();
         int width = openImage.getWidth();
@@ -215,12 +208,17 @@ public class CS355Controller implements ICS355Controller {
             }
         }
 
+        hasBackground = true;
+        showBackground = true;
+
         model.loadImage( imgData );
+
     }
 
     @Override
     public void toggleBackgroundDisplay() {
-
+        showBackground = !showBackground;
+        GUIFunctions.refresh();
     }
 
     public void handleClick(Point2D loc) {

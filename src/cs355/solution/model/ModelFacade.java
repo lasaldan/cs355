@@ -38,6 +38,42 @@ public class ModelFacade extends Observable {
         return background;
     }
 
+    public void adjustBrightness( int val ) {
+        ImageTools.brighten(background, val);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void adjustContrast( int val ) {
+        ImageTools.contrast(background, val);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void uniformBlur() {
+        ImageTools.blur(background);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void medianBlur() {
+        ImageTools.median(background);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void sharpen() {
+        ImageTools.sharpen(background);
+        setChanged();
+        notifyObservers();
+    }
+
+    public void detectEdges() {
+        ImageTools.edgeDetect(background);
+        setChanged();
+        notifyObservers();
+    }
+
     public int addShape(Shape s) {
 
         int shapeIndex = 0;

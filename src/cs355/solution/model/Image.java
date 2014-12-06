@@ -31,4 +31,5 @@ public class Image {
     public int[][] getImageData() {
         return imageData;
     }
+
 }

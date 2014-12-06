@@ -52,7 +52,13 @@ public class ViewRefresher implements IViewRefresher, Observer {
             }
         }
 
-        g2d.drawImage(img, null, null);
+        AffineTransform objToWorld = new AffineTransform();
+        objToWorld.concatenate(controller.getTranslationTransformation());
+        g2d.setTransform(objToWorld);
+
+        int offsetx = 1024 - img.getWidth() / 2;
+        int offsety = 1024 - img.getHeight() / 2;
+        g2d.drawImage(img,offsetx,offsety,null);
     }
 
     @Override
@@ -60,7 +66,7 @@ public class ViewRefresher implements IViewRefresher, Observer {
         Graphics2D g2d = (Graphics2D)g2d_fresh.create();
         List shapeList = new ArrayList( model.getShapes() );
 
-        if(controller.hasBackground)
+        if(controller.hasBackground && controller.showBackground)
             drawBackground(model.getImage(), g2d);
 
         shapeList.add(controller.getTempShape());

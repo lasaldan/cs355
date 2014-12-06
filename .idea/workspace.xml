@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d633c1b1-8daa-4d96-96da-0306740fb11a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/cs355/solution/CS355Image.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/cs355/solution/model/Image.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/cs355/solution/ImageTools.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/cs355/solution/ImageTools.java" afterPath="$PROJECT_DIR$/src/cs355/solution/model/ImageTools.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cs355/solution/CS355Controller.java" afterPath="$PROJECT_DIR$/src/cs355/solution/CS355Controller.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cs355/solution/model/Image.java" afterPath="$PROJECT_DIR$/src/cs355/solution/model/Image.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cs355/solution/model/ModelFacade.java" afterPath="$PROJECT_DIR$/src/cs355/solution/model/ModelFacade.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cs355/solution/ViewRefresher.java" afterPath="$PROJECT_DIR$/src/cs355/solution/ViewRefresher.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -37,12 +36,34 @@
       <file leaf-file-name="CS355Controller.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cs355/solution/CS355Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2355" max-vertical-offset="9405">
-              <caret line="181" column="31" selection-start-line="181" selection-start-column="31" selection-end-line="181" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2655" max-vertical-offset="9390">
+              <caret line="208" column="9" selection-start-line="208" selection-start-column="9" selection-end-line="208" selection-end-column="9" />
               <folding>
-                <element signature="e#3400#3401#0" expanded="true" />
-                <element signature="e#3472#3473#0" expanded="true" />
+                <element signature="e#3360#3361#0" expanded="true" />
+                <element signature="e#3432#3433#0" expanded="true" />
+                <element signature="e#3965#3966#0" expanded="true" />
+                <element signature="e#4000#4001#0" expanded="true" />
+                <element signature="e#4045#4046#0" expanded="true" />
+                <element signature="e#4076#4077#0" expanded="true" />
+                <element signature="e#4124#4125#0" expanded="true" />
+                <element signature="e#4158#4159#0" expanded="true" />
+                <element signature="e#4207#4208#0" expanded="true" />
+                <element signature="e#4242#4243#0" expanded="true" />
+                <element signature="e#4315#4316#0" expanded="true" />
+                <element signature="e#4372#4373#0" expanded="true" />
+                <element signature="e#4449#4450#0" expanded="true" />
+                <element signature="e#4510#4511#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Image.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cs355/solution/model/Image.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="92" max-vertical-offset="495">
+              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -50,8 +71,8 @@
       <file leaf-file-name="ModelFacade.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cs355/solution/model/ModelFacade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="975">
-              <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="377" max-vertical-offset="1515">
+              <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
               <folding>
                 <element signature="e#816#817#0" expanded="true" />
                 <element signature="e#849#850#0" expanded="true" />
@@ -60,11 +81,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CS355Image.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CS355Image.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cs355/solution/CS355Image.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.92783505" vertical-offset="0" max-vertical-offset="645">
-              <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="645">
+              <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -73,12 +94,14 @@
         </entry>
       </file>
       <file leaf-file-name="ImageTools.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/cs355/solution/ImageTools.java">
+        <entry file="file://$PROJECT_DIR$/src/cs355/solution/model/ImageTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5445">
-              <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="4577" max-vertical-offset="9435">
+              <caret line="316" column="45" selection-start-line="316" selection-start-column="45" selection-end-line="316" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#439#440#0" expanded="true" />
+                <element signature="e#483#484#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -94,16 +117,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewRefresher.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ViewRefresher.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/cs355/solution/ViewRefresher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="276" max-vertical-offset="2625">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.8118557" vertical-offset="315" max-vertical-offset="2715">
+              <caret line="59" column="45" selection-start-line="59" selection-start-column="45" selection-end-line="59" selection-end-column="45" />
               <folding>
-                <element signature="e#6276#6277#0" expanded="true" />
-                <element signature="e#6316#6317#0" expanded="true" />
-                <element signature="e#6382#6383#0" expanded="true" />
-                <element signature="e#6420#6421#0" expanded="true" />
+                <element signature="e#6587#6588#0" expanded="true" />
+                <element signature="e#6627#6628#0" expanded="true" />
+                <element signature="e#6693#6694#0" expanded="true" />
+                <element signature="e#6731#6732#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -180,12 +203,12 @@
         <option value="$PROJECT_DIR$/src/cs355/solution/CS355.java" />
         <option value="$PROJECT_DIR$/src/cs355/solution/CS355ScrollController.java" />
         <option value="$PROJECT_DIR$/src/cs355/solution/CS355ZoomController.java" />
-        <option value="$PROJECT_DIR$/src/cs355/solution/model/ModelFacade.java" />
-        <option value="$PROJECT_DIR$/src/cs355/solution/ViewRefresher.java" />
-        <option value="$PROJECT_DIR$/src/cs355/solution/model/Image.java" />
         <option value="$PROJECT_DIR$/src/cs355/solution/CS355Image.java" />
-        <option value="$PROJECT_DIR$/src/cs355/solution/CS355Controller.java" />
         <option value="$PROJECT_DIR$/src/cs355/solution/ImageTools.java" />
+        <option value="$PROJECT_DIR$/src/cs355/solution/model/Image.java" />
+        <option value="$PROJECT_DIR$/src/cs355/solution/model/ModelFacade.java" />
+        <option value="$PROJECT_DIR$/src/cs355/solution/CS355Controller.java" />
+        <option value="$PROJECT_DIR$/src/cs355/solution/ViewRefresher.java" />
       </list>
     </option>
   </component>
@@ -347,6 +370,9 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="cs355.solution.model" />
       <recent name="cs355.solution.view" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="cs355.solution.model" />
     </key>
   </component>
   <component name="RunManager" selected="Application.CS355">
@@ -596,7 +622,11 @@
       <created>1417879667677</created>
       <updated>1417879667677</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Lab 7 - Brightness, Contrast, Median, Blur all working">
+      <created>1417899726455</created>
+      <updated>1417899726455</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -687,7 +717,8 @@
     <MESSAGE value="Lab4 Scrolling at zoom 1 working" />
     <MESSAGE value="Backup before upgrade os" />
     <MESSAGE value="Lab4 Iffy - Starting lab 7" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lab4 Iffy - Starting lab 7" />
+    <MESSAGE value="Lab 7 - Brightness, Contrast, Median, Blur all working" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lab 7 - Brightness, Contrast, Median, Blur all working" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -728,8 +759,20 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="4200">
           <caret line="38" column="44" selection-start-line="38" selection-start-column="44" selection-end-line="38" selection-end-column="44" />
           <folding>
-            <element signature="e#3400#3401#0" expanded="true" />
-            <element signature="e#3472#3473#0" expanded="true" />
+            <element signature="e#3360#3361#0" expanded="true" />
+            <element signature="e#3432#3433#0" expanded="true" />
+            <element signature="e#3965#3966#0" expanded="true" />
+            <element signature="e#4000#4001#0" expanded="true" />
+            <element signature="e#4045#4046#0" expanded="true" />
+            <element signature="e#4076#4077#0" expanded="true" />
+            <element signature="e#4124#4125#0" expanded="true" />
+            <element signature="e#4158#4159#0" expanded="true" />
+            <element signature="e#4207#4208#0" expanded="true" />
+            <element signature="e#4242#4243#0" expanded="true" />
+            <element signature="e#4315#4316#0" expanded="true" />
+            <element signature="e#4372#4373#0" expanded="true" />
+            <element signature="e#4449#4450#0" expanded="true" />
+            <element signature="e#4510#4511#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1029,23 +1072,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cs355/solution/ViewRefresher.java">
+    <entry file="file://$PROJECT_DIR$/src/cs355/solution/CS355Image.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="276" max-vertical-offset="2625">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="645">
+          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
           <folding>
-            <element signature="e#6276#6277#0" expanded="true" />
-            <element signature="e#6316#6317#0" expanded="true" />
-            <element signature="e#6382#6383#0" expanded="true" />
-            <element signature="e#6420#6421#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs355/solution/model/ImageTools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4577" max-vertical-offset="9435">
+          <caret line="316" column="45" selection-start-line="316" selection-start-column="45" selection-end-line="316" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#439#440#0" expanded="true" />
+            <element signature="e#483#484#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cs355/solution/model/ModelFacade.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="975">
-          <caret line="37" column="25" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="377" max-vertical-offset="1515">
+          <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
           <folding>
             <element signature="e#816#817#0" expanded="true" />
             <element signature="e#849#850#0" expanded="true" />
@@ -1053,50 +1105,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cs355/solution/CS355Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2355" max-vertical-offset="9405">
-          <caret line="181" column="31" selection-start-line="181" selection-start-column="31" selection-end-line="181" selection-end-column="31" />
-          <folding>
-            <element signature="e#3400#3401#0" expanded="true" />
-            <element signature="e#3472#3473#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cs355/solution/ImageTools.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5445">
-          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/cs355/solution/model/Image.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26546392" vertical-offset="17" max-vertical-offset="600">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="92" max-vertical-offset="495">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs355/solution/CS355Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2655" max-vertical-offset="9390">
+          <caret line="208" column="9" selection-start-line="208" selection-start-column="9" selection-end-line="208" selection-end-column="9" />
           <folding>
-            <element signature="e#320#321#0" expanded="true" />
-            <element signature="e#348#349#0" expanded="true" />
-            <element signature="e#378#379#0" expanded="true" />
-            <element signature="e#407#408#0" expanded="true" />
-            <element signature="e#452#453#0" expanded="true" />
-            <element signature="e#494#495#0" expanded="true" />
-            <element signature="e#531#532#0" expanded="true" />
-            <element signature="e#563#564#0" expanded="true" />
+            <element signature="e#3360#3361#0" expanded="true" />
+            <element signature="e#3432#3433#0" expanded="true" />
+            <element signature="e#3965#3966#0" expanded="true" />
+            <element signature="e#4000#4001#0" expanded="true" />
+            <element signature="e#4045#4046#0" expanded="true" />
+            <element signature="e#4076#4077#0" expanded="true" />
+            <element signature="e#4124#4125#0" expanded="true" />
+            <element signature="e#4158#4159#0" expanded="true" />
+            <element signature="e#4207#4208#0" expanded="true" />
+            <element signature="e#4242#4243#0" expanded="true" />
+            <element signature="e#4315#4316#0" expanded="true" />
+            <element signature="e#4372#4373#0" expanded="true" />
+            <element signature="e#4449#4450#0" expanded="true" />
+            <element signature="e#4510#4511#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cs355/solution/CS355Image.java">
+    <entry file="file://$PROJECT_DIR$/src/cs355/solution/ViewRefresher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.92783505" vertical-offset="0" max-vertical-offset="645">
-          <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.8118557" vertical-offset="315" max-vertical-offset="2715">
+          <caret line="59" column="45" selection-start-line="59" selection-start-column="45" selection-end-line="59" selection-end-column="45" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#6587#6588#0" expanded="true" />
+            <element signature="e#6627#6628#0" expanded="true" />
+            <element signature="e#6693#6694#0" expanded="true" />
+            <element signature="e#6731#6732#0" expanded="true" />
           </folding>
         </state>
       </provider>
