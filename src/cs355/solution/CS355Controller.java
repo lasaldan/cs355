@@ -552,7 +552,7 @@ public class CS355Controller implements ICS355Controller {
     }
 
     public AffineTransform getScaleTransformation() {
-        return new AffineTransform(1/zoomData.getZoomLevel(), 0, 0, 1/zoomData.getZoomLevel(), 0, 0);
+        return new AffineTransform(1.0/zoomData.getZoomLevel(), 0, 0, 1.0/zoomData.getZoomLevel(), 0, 0);
     }
     @Override
     public Shape getTempShape() {
