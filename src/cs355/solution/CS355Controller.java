@@ -156,6 +156,10 @@ public class CS355Controller implements ICS355Controller {
 
     @Override
     public void toggle3DModelDisplay() {
+        DoubleMatrix test = new DoubleMatrix(4,4);
+        test.setIdentity();
+
+        DoubleMatrix test1 = new DoubleMatrix(4,4);
 
     }
 
